@@ -5,17 +5,22 @@
  */
 const express = require('express')
 const router = express.Router()
-const providersCtrl = require('../controllers/providersCtrl')
+
+const userCtrl = require('../controllers/userCtrl')
 
 //Get all the data
-router.get('/', providersCtrl.getProviders)
+router.get('/', userCtrl.test)
+
 //Create a new document
-router.post('/', providersCtrl.createProvider)
+router.post('/', userCtrl.login)
+
 //Obtain a specific document
-router.get('/:id', providersCtrl.getProvider)
+//router.get('/:id', providersCtrl.getProvider)
+
 //Update a document
-router.put('/:id', providersCtrl.editProvider)
+//router.put('/:id', providersCtrl.editProvider)
+
 //Delete a specific document
-router.delete('/:id', providersCtrl.deleteProvider)
+//router.delete('/:id', providersCtrl.deleteProvider)
 
 module.exports = router
