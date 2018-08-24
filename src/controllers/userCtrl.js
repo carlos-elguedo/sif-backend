@@ -16,8 +16,7 @@ userCtrl.login = async (req, res) =>{
     const usurToVerify = new User(req.body)
 
     res.json({
-        status: "Llego",
-        data: usurToVerify
+        status: "ok",
     })
 
 }
