@@ -11,8 +11,11 @@ const userCtrl = require('../controllers/userCtrl')
 //Get all the data
 router.get('/', userCtrl.test)
 
-//Create a new document
+//Login users
 router.post('/', userCtrl.login)
+
+//Register users
+router.post('/signup', userCtrl.register)
 
 //Obtain a specific document
 //router.get('/:id', providersCtrl.getProvider)

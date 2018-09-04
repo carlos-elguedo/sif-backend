@@ -7,12 +7,12 @@ const mongoose = require('mongoose')
 const {Schema} = mongoose
 
 const User = new Schema({
-    email: {type: String},
-    password: {type: String},
-    city: {type: String},
+    register_name: {type: String},
+    register_password: {type: String},
+    register_date_register: {type: String},
+    register_age: {type: Date},
     createdAt: {type: Date, default: Date.now()},
-    tellephone: {type: String},
-    status: {type: String}
+    status: {type: Boolean}
 })
 
 

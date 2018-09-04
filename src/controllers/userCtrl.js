@@ -11,13 +11,42 @@ const userCtrl = {}
 
 
 
+userCtrl.register = async (req, res) =>{
+
+    const usurToVerify = new User(req.body)
+
+    console.log("Llego: " + usurToVerify);
+
+    res.json({
+        usurToVerify
+    })
+
+    //Dependiendo del metodo usado como registro, se procede
+
+
+
+    //Verificamos que el usuario no este registrado
+
+
+}
+
+
 userCtrl.login = async (req, res) =>{
 
     const usurToVerify = new User(req.body)
 
+    console.log("Llego: " + usurToVerify);
+
     res.json({
-        status: "ok",
+        usurToVerify
     })
+
+    //Dependiendo del metodo usado como registro, se procede
+
+
+
+    //Verificamos que el usuario no este registrado
+
 
 }
 

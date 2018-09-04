@@ -36,7 +36,7 @@ app.use(cors())
 
 //Routes
 //Route of the api providers
-app.use('/api/rest/login', require('./routes/accessrouter'))
+app.use('/api/rest/access', require('./routes/accessrouter'))
 
 
 
