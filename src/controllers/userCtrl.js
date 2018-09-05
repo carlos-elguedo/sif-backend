@@ -6,6 +6,8 @@
 
 const User = require('../models/User')
 
+const validator = require('../utils/validator')
+
 //Controller to export
 const userCtrl = {}
 
@@ -13,40 +15,161 @@ const userCtrl = {}
 
 userCtrl.register = async (req, res) =>{
 
-    const usurToVerify = new User(req.body)
 
-    console.log("Llego: " + usurToVerify);
+    //console.log("validador: " + validator.verifiUserToRegister(req.body))
 
-    res.json({
-        usurToVerify
-    })
+    //we carry out a validation of the data received to give an answaer according to data received
+    switch(validator.verifiUserToRegister(req.body)){
 
-    //Dependiendo del metodo usado como registro, se procede
+        //Info empty
+        case 0:
+            res.json({
+                message: "Por favor llena todos los datos",
+                type_error: 0
+            })
+        break;
+
+        //Size minimum
+        case 1:
+            res.json({
+                message: "Algunos datos no superan el minimo requerido",
+                type_error: 1
+            })
+        break;
+
+        //Email or number phone incorrect
+        case 2:
+            res.json({
+                message: "El correo electronico o numero telefonico sumistrado es incorrecto",
+                type_error: 2
+            })
+        break;
 
 
+        /**
+         * Correct info
+         */
 
-    //Verificamos que el usuario no este registrado
+        //Data correct, ready for register with email or number phone
+        
+        case 10:
+        case 11:
+            const userToRegister = new User(req.body)
+
+            await User.findOne({register_data_register: userToRegister.register_data_register}, (error, data)=>{
+                if(error){
+                    console.error(error)
+                }else{
+                    //console.log(data)
+                    if(data == null){
+                        userToRegister.save()
+                        res.json({
+                            message: "Registro correcto",
+                            type_error: -1
+                        })
+                    }else{
+                        console.log(data)
+                        res.json({
+                            message: "Hay un registro con el correo electronico o numero telefonico sumistrado",
+                            type_error: 9
+                        })
+                    }
+                }
+            })
+        break;
 
 
+        //Default
+        default:
+            res.json({
+                message: "Vuelve a intentarlo por favor",
+                type_error: 99
+            })
+        break;
+
+
+    }//End the switch
 }
 
 
 userCtrl.login = async (req, res) =>{
 
-    const usurToVerify = new User(req.body)
+    //we carry out a validation of the data received to give an answaer according to data received
+    switch(validator.verifiUserToLogin(req.body)){
 
-    console.log("Llego: " + usurToVerify);
+        //Info empty
+        case 0:
+            res.json({
+                message: "Por favor llena todos los datos",
+                type_error: 0
+            })
+        break;
 
-    res.json({
-        usurToVerify
-    })
+        //Size minimum
+        case 1:
+            res.json({
+                message: "Algunos datos no superan el minimo requerido",
+                type_error: 1
+            })
+        break;
 
-    //Dependiendo del metodo usado como registro, se procede
+        //Email or number phone incorrect
+        case 2:
+            res.json({
+                message: "El correo electronico o numero telefonico sumistrado es incorrecto",
+                type_error: 2
+            })
+        break;
 
 
+        /**
+         * Correct info
+         */
 
-    //Verificamos que el usuario no este registrado
+        //Data correct, ready for register with email or number phone
+        
+        case 10:
+        case 11:
+        
+            console.log(req.body.login_data);
 
+            await User.find({
+                $and:[
+                    {register_data_register: req.body.login_data},
+                    {register_password: req.body.login_password}
+                ]
+            }, (error, data)=>{
+                    if(error){
+                        console.error(error)
+                    }else{
+                        //console.log("Result: " + data.length)
+                        if(data.length == 0){
+                            res.json({
+                                message: "El usuario no existe registrado",
+                                type_error: 9
+                            })
+                        }else{
+                            //login correct
+                            res.json({
+                                message: "Login exitoso",
+                                type_error: -1
+                            })
+                        }
+                    }
+                })
+        break;
+
+
+        //Default
+        default:
+            res.json({
+                message: "Vuelve a intentarlo por favor",
+                type_error: 99
+            })
+        break;
+
+
+    }//End the switch
 
 }
 

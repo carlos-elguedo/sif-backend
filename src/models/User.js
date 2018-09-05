@@ -9,7 +9,7 @@ const {Schema} = mongoose
 const User = new Schema({
     register_name: {type: String},
     register_password: {type: String},
-    register_date_register: {type: String},
+    register_data_register: {type: String},
     register_age: {type: Date},
     createdAt: {type: Date, default: Date.now()},
     status: {type: Boolean}
