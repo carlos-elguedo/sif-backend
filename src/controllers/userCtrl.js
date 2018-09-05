@@ -25,7 +25,8 @@ userCtrl.register = async (req, res) =>{
         case 0:
             res.json({
                 message: "Por favor llena todos los datos",
-                type_error: 0
+                type_error: 0,
+                req: req.body
             })
         break;
 
@@ -33,7 +34,8 @@ userCtrl.register = async (req, res) =>{
         case 1:
             res.json({
                 message: "Algunos datos no superan el minimo requerido",
-                type_error: 1
+                type_error: 1,
+                req: req.body
             })
         break;
 
@@ -101,7 +103,9 @@ userCtrl.login = async (req, res) =>{
         case 0:
             res.json({
                 message: "Por favor llena todos los datos",
-                type_error: 0
+                type_error: 0,
+                req: req.body
+
             })
         break;
 
@@ -130,8 +134,6 @@ userCtrl.login = async (req, res) =>{
         
         case 10:
         case 11:
-        
-            console.log(req.body.login_data);
 
             await User.find({
                 $and:[

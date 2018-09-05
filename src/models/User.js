@@ -11,8 +11,10 @@ const User = new Schema({
     register_password: {type: String},
     register_data_register: {type: String},
     register_age: {type: Date},
+    register_type: {type: String},
     createdAt: {type: Date, default: Date.now()},
-    status: {type: Boolean}
+    status: {type: Boolean, default: false}
+    
 })
 
 

@@ -18,8 +18,8 @@ function verifiUserToRegister(user){
     if(user.register_name !== "" && user.register_data_register !== "" && user.register_password !== "" && user.register_age !== ""){
         console.log("Info correct");
 
-        //First, we check the name
-        if(correctLength(user.register_name, 4) && correctLength(user.register_password, 6) && correctDate(user.register_age)){
+        //First, we check the info
+        if(correctLength(user.register_name, 4) && correctLength(user.register_password, 6) && correctDate(user.register_age) && correctUserType(user.register_type) ){
             console.log("size correct")
 
             //Now, we check the data for the register
@@ -173,6 +173,14 @@ function correctDate(date){
     return ret;
 }
 
+/**
+ * Correct Type user
+ */
+function correctUserType(userType){
+    var ret = false;
+    (userType === 1 || userType === 2)?ret = true: ret = false;
+    return ret;
+}
 
 
 
