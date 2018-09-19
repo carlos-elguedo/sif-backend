@@ -16,23 +16,23 @@ function verifiUserToRegister(user){
 
     //console.log("User name: " + user.register_name);
     if(user.register_name !== "" && user.register_data_register !== "" && user.register_password !== "" && user.register_age !== ""){
-        console.log("Info correct");
+        //console.log("Info correct");
 
         //First, we check the info
         if(correctLength(user.register_name, 4) && correctLength(user.register_password, 6) && correctDate(user.register_age) && correctUserType(user.register_type) ){
-            console.log("size correct")
+            //console.log("size correct")
 
             //Now, we check the data for the register
             if(correctEmail(user.register_data_register)){
-                console.log("email correct");
+                //console.log("email correct");
                 ret = 10;
             }else{
-                console.log("email incorrect: " + user.register_data_register);
+                //console.log("email incorrect: " + user.register_data_register);
                 correctNumberPhone(user.register_data_register)? ret = 11: ret = 2;
                 //ret = 3;
             }
         }else{
-            console.log("size incorrect");
+            //console.log("size incorrect");
             ret = 1;
         }
 

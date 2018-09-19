@@ -144,7 +144,8 @@ userCtrl.login = async (req, res) =>{
                     if(error){
                         console.error(error)
                     }else{
-                        //console.log("Result: " + data.length)
+                        const jsonData = JSON.stringify(data)
+                        console.log("Result: " + jsonData.register_data_register)
                         if(data.length == 0){
                             res.json({
                                 message: "El usuario no existe registrado",
@@ -152,6 +153,10 @@ userCtrl.login = async (req, res) =>{
                             })
                         }else{
                             //login correct
+
+                            //Search the user type
+                            //const userType = data.register_type;
+
                             res.json({
                                 message: "Login exitoso",
                                 type_error: -1
