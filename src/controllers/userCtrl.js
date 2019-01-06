@@ -145,7 +145,7 @@ userCtrl.login = async (req, res) =>{
                         console.error(error)
                     }else{
                         const jsonData = JSON.stringify(data)
-                        console.log("Result: " + jsonData.register_data_register)
+                        console.log(jsonData)
                         if(data.length == 0){
                             res.json({
                                 message: "El usuario no existe registrado",
@@ -159,7 +159,8 @@ userCtrl.login = async (req, res) =>{
 
                             res.json({
                                 message: "Login exitoso",
-                                type_error: -1
+                                type_error: -1,
+                                user: jsonData
                             })
                         }
                     }
