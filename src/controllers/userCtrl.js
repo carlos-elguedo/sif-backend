@@ -58,7 +58,7 @@ userCtrl.register = async (req, res) =>{
         case 11:
             const userToRegister = new User(req.body)
 
-            await User.findOne({register_data_register: userToRegister.register_data_register}, (error, data)=>{
+            await User.findOne({data_register: userToRegister.register_data_register}, (error, data)=>{
                 if(error){
                     console.error(error)
                 }else{
@@ -68,6 +68,7 @@ userCtrl.register = async (req, res) =>{
                         res.json({
                             message: "Registro correcto",
                             type_error: -1
+                            //Redirect
                         })
                     }else{
                         console.log(data)
