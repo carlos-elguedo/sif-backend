@@ -4,11 +4,11 @@
  * ret: 0-> Info empty
  * ret: 1-> the data no meet the size minumum
  * ret: 2-> Email or number phone not valid
- * 
+ *
  * succes
  * ret: 10-> info correct, register with email
  * ret: 11-> info correct, register with number phone
- * 
+ *
  */
 
 function verifiUserToRegister(user){
@@ -16,23 +16,30 @@ function verifiUserToRegister(user){
 
     //console.log("User name: " + user.register_name);
     if(user.register_name !== "" && user.register_data_register !== "" && user.register_password !== "" && user.register_age !== ""){
-        //console.log("Info correct");
+        // console.log("Info correct");
 
         //First, we check the info
         if(correctLength(user.register_name, 4) && correctLength(user.register_password, 6) && correctDate(user.register_age) && correctUserType(user.register_type) ){
-            //console.log("size correct")
+            // console.log("size correct")
 
             //Now, we check the data for the register
             if(correctEmail(user.register_data_register)){
-                //console.log("email correct");
+                // console.log("email correct");
                 ret = 10;
             }else{
-                //console.log("email incorrect: " + user.register_data_register);
+                // console.log("email incorrect: " + user.register_data_register);
                 correctNumberPhone(user.register_data_register)? ret = 11: ret = 2;
                 //ret = 3;
             }
         }else{
-            //console.log("size incorrect");
+            // console.log("size incorrect");
+            // console.log(correctLength(user.register_name, 4))
+            // console.log(correctLength(user.register_password, 6))
+            // console.log(correctDate(user.register_age))
+            // console.log(correctUserType(user.register_type))
+
+
+
             ret = 1;
         }
 
@@ -53,11 +60,11 @@ function verifiUserToRegister(user){
  * ret: 0-> Info empty
  * ret: 1-> the data no meet the size minumum
  * ret: 2-> Email or number phone not valid
- * 
+ *
  * ret: 10-> Info correct with email
  * ret: 10-> Info correct with number phone
- * 
- * @param {*} user 
+ *
+ * @param {*} user
  */
 function verifiUserToLogin(user){
     var ret = 0;
@@ -67,9 +74,9 @@ function verifiUserToLogin(user){
 
         //First, we check the name
         if(correctLength(user.login_data, 6) && correctLength(user.login_password, 6)){
-            
+
             //Now, we check the data for the register
-            if(correctEmail(user.login_data)){  
+            if(correctEmail(user.login_data)){
                 ret = 10;
 
             }else{
@@ -85,7 +92,7 @@ function verifiUserToLogin(user){
 
     return ret;
 
-    
+
 }
 
 
@@ -142,7 +149,7 @@ function correctNumberPhone(posibleNumber){
 
     var expr=/^([0-9]+){9}$/;//<--- con esto vamos a validar el numero
     var expr2=/\s/;//<--- con esto vamos a validar que no tenga espacios en blanco
- 
+
     if(!expr2.test(posibleNumber)){
         if(expr.test(posibleNumber)){
             ret = true;
@@ -164,12 +171,12 @@ function correctDate(date){
     var month = fechaf[1];
     var year = fechaf[0];
     year2 = parseInt(year);
-    
+
     if(year2 < 2000 && year2 > 1900){
         ret = true;
     }
 
-    console.log("       Fecha: " + ret)
+    // console.log("Fecha: " + ret)
     return ret;
 }
 
@@ -178,7 +185,7 @@ function correctDate(date){
  */
 function correctUserType(userType){
     var ret = false;
-    (userType === 1 || userType === 2)?ret = true: ret = false;
+    (userType === 1 || userType === 2 || userType === "1" || userType === "2" )?ret = true: ret = false;
     return ret;
 }
 

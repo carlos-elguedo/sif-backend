@@ -16,16 +16,21 @@ const User = new Schema({
     age: {type: Date},
     type: {type: String},
     createdAt: {type: Date, default: Date.now()},
-    status: {type: Boolean, default: false}
-    
+    status: {type: Boolean, default: true}
+
 })
+
+User.methods.toUpper = async function () {
+  this.password = this.password.toUpperCase();
+  this.name = this.name.toUpperCase();
+}
 
 User.methods.encryptPassword = async (password_normal) => {
     const salt = await bcryptjs.genSalt(10);
     const hash = await bcryptjs.hash(password_normal, salt);
     return hash;
   };
-  
+
 User.methods.correctPassword = async function (password_user) {
     return await bcryptjs.compare(password_user, this.password);
   };

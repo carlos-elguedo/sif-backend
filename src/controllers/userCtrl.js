@@ -17,7 +17,7 @@ userCtrl.register = async (req, res) =>{
 
 
     //console.log("validador: " + validator.verifiUserToRegister(req.body))
-
+    // console.log(req.body);
     //we carry out a validation of the data received to give an answaer according to data received
     switch(validator.verifiUserToRegister(req.body)){
 
@@ -25,6 +25,7 @@ userCtrl.register = async (req, res) =>{
         case 0:
             res.json({
                 message: "Por favor llena todos los datos",
+                option: "Aceptar",
                 type_error: 0,
                 req: req.body
             })
@@ -34,6 +35,7 @@ userCtrl.register = async (req, res) =>{
         case 1:
             res.json({
                 message: "Algunos datos no superan el minimo requerido",
+                option: "Aceptar",
                 type_error: 1,
                 req: req.body
             })
@@ -43,6 +45,7 @@ userCtrl.register = async (req, res) =>{
         case 2:
             res.json({
                 message: "El correo electronico o numero telefonico sumistrado es incorrecto",
+                option: "Aceptar",
                 type_error: 2
             })
         break;
@@ -53,20 +56,31 @@ userCtrl.register = async (req, res) =>{
          */
 
         //Data correct, ready for register with email or number phone
-        
+
         case 10:
         case 11:
-            const userToRegister = new User(req.body)
 
-            await User.findOne({data_register: userToRegister.register_data_register}, (error, data)=>{
+            const {register_name, register_data_register, register_password, register_age, register_type} = req.body
+
+            console.log("User to register: ", register_data_register)
+            await User.findOne({data_register: register_data_register}, async (error, data)=>{
                 if(error){
                     console.error(error)
                 }else{
-                    //console.log(data)
+
                     if(data == null){
-                        userToRegister.save()
+                        const userToRegister = new User({
+                                                        name: register_name,
+                                                        data_register: register_data_register,
+                                                        password: register_password,
+                                                        age: register_age,
+                                                        type: register_type})
+                        userToRegister.password = await userToRegister.encryptPassword(register_password);
+                        await userToRegister.save()
+                        console.log("\n\nRegistro añadido");
                         res.json({
                             message: "Registro correcto",
+                            option: "Grandioso!",
                             type_error: -1
                             //Redirect
                         })
@@ -74,6 +88,7 @@ userCtrl.register = async (req, res) =>{
                         console.log(data)
                         res.json({
                             message: "Hay un registro con el correo electronico o numero telefonico sumistrado",
+                            option: "Aceptar",
                             type_error: 9
                         })
                     }
@@ -95,8 +110,15 @@ userCtrl.register = async (req, res) =>{
 }
 
 
+
+
+
+
+
+
 userCtrl.login = async (req, res) =>{
 
+    console.log(req.body);
     //we carry out a validation of the data received to give an answaer according to data received
     switch(validator.verifiUserToLogin(req.body)){
 
@@ -104,6 +126,7 @@ userCtrl.login = async (req, res) =>{
         case 0:
             res.json({
                 message: "Por favor llena todos los datos",
+                option: "Aceptar",
                 type_error: 0,
                 req: req.body
 
@@ -114,6 +137,7 @@ userCtrl.login = async (req, res) =>{
         case 1:
             res.json({
                 message: "Algunos datos no superan el minimo requerido",
+                option: "Aceptar",
                 type_error: 1
             })
         break;
@@ -122,6 +146,7 @@ userCtrl.login = async (req, res) =>{
         case 2:
             res.json({
                 message: "El correo electronico o numero telefonico sumistrado es incorrecto",
+                option: "Aceptar",
                 type_error: 2
             })
         break;
@@ -132,14 +157,14 @@ userCtrl.login = async (req, res) =>{
          */
 
         //Data correct, ready for register with email or number phone
-        
+
         case 10:
         case 11:
-
+            const {login_data, login_password} = req.body
             await User.find({
                 $and:[
-                    {register_data_register: req.body.login_data},
-                    {register_password: req.body.login_password}
+                    {data_register: login_data},
+                    {password: login_password}
                 ]
             }, (error, data)=>{
                     if(error){
@@ -150,6 +175,7 @@ userCtrl.login = async (req, res) =>{
                         if(data.length == 0){
                             res.json({
                                 message: "El usuario no existe registrado",
+                                option: "OK",
                                 type_error: 9
                             })
                         }else{
@@ -160,6 +186,7 @@ userCtrl.login = async (req, res) =>{
 
                             res.json({
                                 message: "Login exitoso",
+                                option: "Perfect!",
                                 type_error: -1,
                                 user: jsonData
                             })
@@ -184,7 +211,7 @@ userCtrl.login = async (req, res) =>{
 
 
 userCtrl.test = async (req, res) =>{
-    
+
     res.json({
         status: "Llego al test",
     })
@@ -229,7 +256,7 @@ userCtrl.editProvider = async (req, res) =>{
     const {id} = req.params
 
     //A new document is defined based on the received
-    const provider = {        
+    const provider = {
         address: req.body.address,
         city: req.body.city,
         document: req.body.document,
