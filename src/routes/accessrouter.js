@@ -4,6 +4,7 @@
  * Archivo encargado de establecer la ruta para realizar la operacion solicitadad a la api
  */
 const express = require('express')
+
 const router = express.Router()
 
 const userCtrl = require('../controllers/userCtrl')
@@ -12,7 +13,7 @@ const userCtrl = require('../controllers/userCtrl')
 router.get('/', userCtrl.test)
 
 //Login users
-router.post('/', userCtrl.login)
+router.post('/', userCtrl.login)// userCtrl.login
 
 //Register users
 router.post('/signup', userCtrl.register)

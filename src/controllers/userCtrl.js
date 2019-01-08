@@ -3,6 +3,7 @@
  * @version 0.0.1
  * File in charge of managing and controlling the operations requested to the api
  */
+const passport = require('passport');
 
 const User = require('../models/User')
 
@@ -115,99 +116,103 @@ userCtrl.register = async (req, res) =>{
 
 
 
-
-userCtrl.login = async (req, res) =>{
-
-    console.log(req.body);
-    //we carry out a validation of the data received to give an answaer according to data received
-    switch(validator.verifiUserToLogin(req.body)){
-
-        //Info empty
-        case 0:
-            res.json({
-                message: "Por favor llena todos los datos",
-                option: "Aceptar",
-                type_error: 0,
-                req: req.body
-
-            })
-        break;
-
-        //Size minimum
-        case 1:
-            res.json({
-                message: "Algunos datos no superan el minimo requerido",
-                option: "Aceptar",
-                type_error: 1
-            })
-        break;
-
-        //Email or number phone incorrect
-        case 2:
-            res.json({
-                message: "El correo electronico o numero telefonico sumistrado es incorrecto",
-                option: "Aceptar",
-                type_error: 2
-            })
-        break;
-
-
-        /**
-         * Correct info
-         */
-
-        //Data correct, ready for register with email or number phone
-
-        case 10:
-        case 11:
-            const {login_data, login_password} = req.body
-            await User.find({
-                $and:[
-                    {data_register: login_data},
-                    {password: login_password}
-                ]
-            }, (error, data)=>{
-                    if(error){
-                        console.error(error)
-                    }else{
-                        const jsonData = JSON.stringify(data)
-                        console.log(jsonData)
-                        if(data.length == 0){
-                            res.json({
-                                message: "El usuario no existe registrado",
-                                option: "OK",
-                                type_error: 9
-                            })
-                        }else{
-                            //login correct
-
-                            //Search the user type
-                            //const userType = data.register_type;
-
-                            res.json({
-                                message: "Login exitoso",
-                                option: "Perfect!",
-                                type_error: -1,
-                                user: jsonData
-                            })
-                        }
-                    }
-                })
-        break;
-
-
-        //Default
-        default:
-            res.json({
-                message: "Vuelve a intentarlo por favor",
-                type_error: 99
-            })
-        break;
-
-
-    }//End the switch
-
-}
+userCtrl.login = passport.authenticate('local', {
+  successRedirect: 'http://localhost:3000/home',
+  failureRedirect: 'http://localhost:3000/',
+  failureFlash: true
+})
+// userCtrl.login = async (req, res) =>{
+//
+//     console.log(req.body);
+//     //we carry out a validation of the data received to give an answaer according to data received
+//     switch(validator.verifiUserToLogin(req.body)){
+//
+//         //Info empty
+//         case 0:
+//             res.json({
+//                 message: "Por favor llena todos los datos",
+//                 option: "Aceptar",
+//                 type_error: 0,
+//                 req: req.body
+//
+//             })
+//         break;
+//
+//         //Size minimum
+//         case 1:
+//             res.json({
+//                 message: "Algunos datos no superan el minimo requerido",
+//                 option: "Aceptar",
+//                 type_error: 1
+//             })
+//         break;
+//
+//         //Email or number phone incorrect
+//         case 2:
+//             res.json({
+//                 message: "El correo electronico o numero telefonico sumistrado es incorrecto",
+//                 option: "Aceptar",
+//                 type_error: 2
+//             })
+//         break;
+//
+//
+//         /**
+//          * Correct info
+//          */
+//
+//         //Data correct, ready for register with email or number phone
+//
+//         case 10:
+//         case 11:
+//             const {login_data, login_password} = req.body
+//             await User.find({
+//                 $and:[
+//                     {data_register: login_data},
+//                     {password: login_password}
+//                 ]
+//             }, (error, data)=>{
+//                     if(error){
+//                         console.error(error)
+//                     }else{
+//                         const jsonData = JSON.stringify(data)
+//                         console.log(jsonData)
+//                         if(data.length == 0){
+//                             res.json({
+//                                 message: "El usuario no existe registrado",
+//                                 option: "OK",
+//                                 type_error: 9
+//                             })
+//                         }else{
+//                             //login correct
+//
+//                             //Search the user type
+//                             //const userType = data.register_type;
+//
+//                             res.json({
+//                                 message: "Login exitoso",
+//                                 option: "Perfect!",
+//                                 type_error: -1,
+//                                 user: jsonData
+//                             })
+//                         }
+//                     }
+//                 })
+//         break;
+//
+//
+//         //Default
+//         default:
+//             res.json({
+//                 message: "Vuelve a intentarlo por favor",
+//                 type_error: 99
+//             })
+//         break;
+//
+//
+//     }//End the switch
+//
+// }
 
 
 userCtrl.test = async (req, res) =>{

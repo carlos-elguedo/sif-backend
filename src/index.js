@@ -5,15 +5,15 @@
  */
 const express = require('express')
 const morgan = require('morgan')
+const session = require('express-session')
+const flash = require('connect-flash');
+const passport = require('passport')
+
 var cors = require('cors')
 
 const app = express()
-
 const {mongoose} = require('./database')
-
-
-
-
+require('./config/passport')
 
 //Setting
 //We tell the app to congigure to use the port provided by the operating system
@@ -29,7 +29,16 @@ app.use(express.json());
 //To see details of the requests
 app.use(morgan('dev'))
 
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(flash());
 
+//Cors app
 app.use(cors())
 
 

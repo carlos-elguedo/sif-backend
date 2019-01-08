@@ -6,7 +6,7 @@
 
 const mongoose = require('mongoose')
 //Global configurations
-const config = require('./config')
+const config = require('./config/config')
 
 //We define the url to connect to the bd
 const URL = config.DATABASE_URL
