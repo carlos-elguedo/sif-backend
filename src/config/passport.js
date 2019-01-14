@@ -6,10 +6,7 @@ const User = require('../models/User');
 
 
 
-passport.use(new LocalStrategy({
-                                usernameField: 'data_register'
-                              },
-                              async (data_register, password, done) => {
+passport.use(new LocalStrategy({usernameField: 'data_register'}, async (data_register, password, done) => {
 
             console.log("Passsssssssssssssssssssssssssssssssssss")
             // Match Email's User
@@ -27,6 +24,18 @@ passport.use(new LocalStrategy({
             }
 
 }));
+
+// passport.use(new LocalStrategy(
+//   function(username, password, done){
+//     User.findOne({data_register: username}, function (err, user){
+//       console.log('Llegoooooooooooooooooooooooooooooooooooooooooooooooooo')
+//       if(err){ return done(err)}
+//       if(!user){ return done(null, false)}
+//       if(!user.correctPassword(password)){ return done(null, false)}
+//       return done(null, user)
+//     })
+//   }
+// ))
 
 passport.serializeUser((user, done) => {
   done(null, user.id);

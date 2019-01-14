@@ -24,6 +24,10 @@ app.set('port', process.env.PORT || 3001)
 
 
 //Middlewares
+//Cors app
+app.use(cors())
+
+
 //We indicate that we will work with data in json format
 app.use(express.json());
 //To see details of the requests
@@ -38,13 +42,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash());
 
-//Cors app
-app.use(cors())
 
 
 
 //Routes
-//Route of the api providers
+//Route of the api access
 app.use('/api/rest/access', require('./routes/accessrouter'))
 
 

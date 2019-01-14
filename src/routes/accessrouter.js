@@ -4,16 +4,22 @@
  * Archivo encargado de establecer la ruta para realizar la operacion solicitadad a la api
  */
 const express = require('express')
+const passport = require('passport')
+
 
 const router = express.Router()
+
+// router.use(cors())
 
 const userCtrl = require('../controllers/userCtrl')
 
 //Get all the data
 router.get('/', userCtrl.test)
 
-//Login users
-router.post('/', userCtrl.login)// userCtrl.login
+
+
+router.post('/',userCtrl.login)
+
 
 //Register users
 router.post('/signup', userCtrl.register)
