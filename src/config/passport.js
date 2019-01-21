@@ -12,6 +12,7 @@ passport.use(new LocalStrategy({usernameField: 'data_register'}, async (data_reg
             // Match Email's User
             const user = await User1.findOne({data_register: data_register});
             if (!user) {
+              console.log('Error buscando en base de datos');
               return done(null, false, { message: 'Not User found.' });
             } else {
               // Match Password's User

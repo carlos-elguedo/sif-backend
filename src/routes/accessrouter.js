@@ -18,7 +18,7 @@ router.get('/', userCtrl.test)
 
 
 
-router.post('/',userCtrl.login)
+router.post('/', userCtrl.login)
 
 
 //Register users

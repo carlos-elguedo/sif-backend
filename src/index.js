@@ -43,6 +43,10 @@ app.use(passport.session())
 app.use(flash());
 
 
+// Global Variables
+app.use((req, res, next) => {
+  next();
+});
 
 
 //Routes
