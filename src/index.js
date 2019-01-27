@@ -53,6 +53,9 @@ app.use((req, res, next) => {
 //Route of the api access
 app.use('/api/rest/access', require('./routes/accessrouter'))
 
+//Route of the api professions
+app.use('/api/rest/profession', require('./routes/professionrouter'))
+
 
 
 

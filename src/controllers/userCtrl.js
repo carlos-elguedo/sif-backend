@@ -206,10 +206,13 @@ userCtrl.login = async (req, res) =>{
                 const match = await user.correctPassword(login_password)
 
                 if(match) {
-
+                    console.log('User: ', user.type)
                     let redirect = ''
-                    if(user.type === 1)redirect = 'client'
-                    else redirect = 'worker'
+                    if(user.type === '1'){
+                        redirect = 'client'
+                    }else{
+                        redirect = 'worker'
+                    }
 
                     res.json({
                         message: "Login exitoso",
