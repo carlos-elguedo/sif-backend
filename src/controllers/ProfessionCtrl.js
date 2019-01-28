@@ -9,16 +9,18 @@ const Profession = require('../models/Profession')
 
 
 
-
-const validator = require('../utils/validator')
-
 //Controller to export
 const ProfessionCtrl = {}
 
 
 
-ProfessionCtrl.getProfessions = async (req, res) =>{
+ProfessionCtrl.getProfessions = async (req, res) =>{    
 
+}
+
+ProfessionCtrl.getCategories = async (req, res) =>{
+    const categories = await Category.find().sort({'name_es': 1})
+    res.json(categories)
 }
 
 

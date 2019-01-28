@@ -15,8 +15,11 @@ const ProfessionCtrl = require('../controllers/ProfessionCtrl')
 router.get('/', ProfessionCtrl.test)
 
 
+//List of all professions
+router.get('/all', ProfessionCtrl.getProfessions)
 
-router.post('/all', ProfessionCtrl.getProfessions)
+//List all category
+router.get('/allcategory', ProfessionCtrl.getCategories)
 
 
 //Register users

@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const {Schema} = mongoose
 
 const ProfessionGroup = new Schema({
+    cod: {type: String, unique: true},
     name_es: {type: String},
     name_en: {type: String},
     description: {type: String},

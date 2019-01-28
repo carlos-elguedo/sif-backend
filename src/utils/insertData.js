@@ -1,3 +1,8 @@
+const {mongoose} = require('../database')
+
+const Profession = require('../models/Profession')
+const Category = require('../models/ProfessionGroup')
+
 const group_categorias = [
     {
         'esp':'Artesanías',
@@ -482,7 +487,7 @@ const professions = [
         'eng':'DJ - audio operator',
         'grp':'MUS',
         'cod':'DJ'
-    },,
+    },
     {
         'esp':'Especialista en Instrumento',
         'eng':'Instrument Specialist',
@@ -676,3 +681,63 @@ const professions = [
     // }
 
 ];
+
+
+
+insertCategorias = async() =>{
+    for(cat of group_categorias){
+
+        //Print message
+        console.log(`Insertando: ${cat.esp}`)
+
+        try{
+            //New Category to add
+            // console.log(`${cat.esp} ${cat.eng} ${cat.cod}`)
+            let category = new Category({
+                cod:cat.cod,
+                name_es:cat.esp,
+                name_en:cat.eng,
+                description: '',
+                city:[1],
+                status: true
+            })
+            //Saved the record
+            await category.save()
+        }catch(error){
+            console.log('Error: ' + error)
+        }
+        
+    }//End for
+
+}
+
+insertProfessiones = async() =>{
+    for(pro of professions){
+
+        //Print message
+        console.log(`Insertando: ${pro.esp}`)
+
+        try{
+            //New Category to add
+            // console.log(`${cat.esp} ${cat.eng} ${cat.cod}`)
+            let profession = new Profession({
+                cod:pro.cod,
+                name_es:pro.esp,
+                name_en:pro.eng,
+                description: '',
+                city:[1],
+                status: true,
+                group: [pro.grp]
+            })
+            //Saved the record
+            await profession.save()
+        }catch(error){
+            console.log('Error: ' + error)
+        }
+        
+    }//End for
+
+}
+
+// insertCategorias()
+insertProfessiones()
