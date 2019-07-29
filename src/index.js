@@ -6,21 +6,28 @@
 const express = require('express')
 const morgan = require('morgan')
 const session = require('express-session')
-const flash = require('connect-flash');
+const MongoStore = require('connect-mongo')(session)
+const flash = require('connect-flash')
 const passport = require('passport')
+const passportConfig = require('./config/passport')
+const bodyParser = require('body-parser')
+// const mongoose = require('mongoose')
 const path = require('path');
 
-const io = require('socket.io')();
-io.on('connection', () => { console.log('Conectado') });
+const config = require('./config/config')
+
+// const io = require('socket.io')();
+// io.on('connection', () => { console.log('Conectado') });
 
 var cors = require('cors')
 
 const app = express()
 const {mongoose} = require('./database')
 
+
 // require('./config/passport')
 
-const MongoStore = require('connect-mongo')(session);
+// const MongoStore = require('connect-mongo')(session);
 
 //Setting
 //We tell the app to congigure to use the port provided by the operating system
@@ -34,9 +41,25 @@ app.set('port', process.env.PORT || 3001)
 //Cors app
 app.use(cors())
 
+app.use(session({
+    secret: "Secret",
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({
+        url: config.DATABASE_URL,
+        autoReconnect: true
+    })
+}))
+
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 //We indicate that we will work with data in json format
-app.use(express.json());
+// app.use(express.json());
 //To see details of the requests
 app.use(morgan('dev'))
 
@@ -67,6 +90,11 @@ app.use('/api/rest/access', require('./routes/accessrouter'))
 
 //Route of the api professions
 app.use('/api/rest/profession', require('./routes/professionrouter'))
+
+app.get('/', (req, res)=>{
+    req.session.cuenta = req.session.cuenta ? req.session.cuenta + 1: 1
+    res.send(`Hola: ${req.session.cuenta}`)
+})
 
 // static files
 //console.log(app.use(express.static(path.join(__dirname, 'assets'))))

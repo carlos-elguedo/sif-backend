@@ -5,6 +5,7 @@
  */
 const express = require('express')
 const passport = require('passport')
+const passportConfig = require('../config/passport')
 
 
 const router = express.Router()
@@ -18,11 +19,17 @@ router.get('/', userCtrl.test)
 
 
 
-router.post('/', userCtrl.login)
+router.post('/', userCtrl.postLogin)
 
 
 //Register users
-router.post('/signup', userCtrl.register)
+router.post('/signup', userCtrl.postSingup, (err)=>{console.log('Ha ocurrido un error: ', err)})
+
+router.get('/logout', passportConfig.userIsAuthenticated, userCtrl.getLogOut)
+
+router.get('/info', passportConfig.userIsAuthenticated, (req, res)=> {
+    res.json(req.user);
+})
 
 //Obtain a specific document
 //router.get('/:id', providersCtrl.getProvider)
