@@ -31,8 +31,13 @@ User.methods.encryptPassword = async (password_normal) => {
     return hash;
   };
 
-User.methods.correctPassword = async function (password_user) {
-    return await bcryptjs.compare(password_user, this.password);
-  };
+User.methods.correctPassword = async function (password_user, next) {
+    await bcryptjs.compare(password_user, this.password, (err, match)=>{
+      if(err){
+        return next(err);
+      }
+      next(null, match);
+    });
+};
 
 module.exports = mongoose.model("User", User)

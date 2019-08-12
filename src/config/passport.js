@@ -23,7 +23,7 @@ passport.use(new LocalStrategy (
       if(!user){
         return done(null, false, {message: 'El data no existe en nuestra base de datos'});
       }else{
-        User.correctPassword(password, (err, match)=>{
+        user.correctPassword(password, (err, match)=>{
           if(match){
             return done(null, user)
           }else{

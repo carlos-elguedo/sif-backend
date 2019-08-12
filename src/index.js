@@ -91,10 +91,10 @@ app.use('/api/rest/access', require('./routes/accessrouter'))
 //Route of the api professions
 app.use('/api/rest/profession', require('./routes/professionrouter'))
 
-app.get('/', (req, res)=>{
-    req.session.cuenta = req.session.cuenta ? req.session.cuenta + 1: 1
-    res.send(`Hola: ${req.session.cuenta}`)
-})
+// app.get('/', (req, res)=>{
+//     req.session.cuenta = req.session.cuenta ? req.session.cuenta + 1: 1
+//     res.send(`Hola: ${req.session.cuenta}`)
+// })
 
 // static files
 //console.log(app.use(express.static(path.join(__dirname, 'assets'))))
