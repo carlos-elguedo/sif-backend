@@ -31,13 +31,4 @@ router.get('/info', passportConfig.userIsAuthenticated, (req, res)=> {
     res.json(req.user);
 })
 
-//Obtain a specific document
-//router.get('/:id', providersCtrl.getProvider)
-
-//Update a document
-//router.put('/:id', providersCtrl.editProvider)
-
-//Delete a specific document
-//router.delete('/:id', providersCtrl.deleteProvider)
-
 module.exports = router

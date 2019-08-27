@@ -63,8 +63,24 @@ userCtrl.postLogin = async (req, res, next) =>{
             if(err){
                 next(err);
             }
-            console.log('Passo login ', user)
-            res.send('Login exitoso');
+            console.log("log pased ", user.type);
+            let redirect = ''
+            switch(user.type){
+                case '1':
+                    redirect = 'client'	
+                    break;
+                case '2':
+                    redirect = 'worker'	
+                    break;
+            }
+            console.log('Login buenooooooooooooooooooooooooooooooooooooooo')
+             res.json({	
+                message: "Login exitoso",	
+                option: "Perfect!",	
+                type_error: -1,	
+                redirect: redirect	
+            })
+            //res.send('Login exitoso');
         })
     })(req, res, next);
 }
