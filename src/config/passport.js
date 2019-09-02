@@ -37,7 +37,7 @@ passport.use(new LocalStrategy (
 
 
 exports.userIsAuthenticated = (req, res, next) =>{
-  console.log(req.cookie)
+  console.log(req.headers)
   if(req.isAuthenticated()){
     return next();
   }

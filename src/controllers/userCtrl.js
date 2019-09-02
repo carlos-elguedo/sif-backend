@@ -43,13 +43,19 @@ userCtrl.postSingup = async (req, res, next) =>{
             if(err){
                 next(err);
             }
-            res.send('Usuario creado exitosamente')
+            res.json({	
+                message: "Registro exitoso",	
+                option: "Perfect!",	
+                type_error: -1,	
+                redirect: register_type	
+            })
+            // res.send('Usuario creado exitosamente')
         })
     });
 }
 
 userCtrl.postLogin = async (req, res, next) =>{
-    
+    console.log('Llego al login');
     passport.authenticate('local', (err, user, info)=>{
         
         if(err){
