@@ -7,39 +7,40 @@ const express = require('express')
 const morgan = require('morgan')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
-const flash = require('connect-flash')
 const passport = require('passport')
-const passportConfig = require('./config/passport')
 const bodyParser = require('body-parser')
-// const mongoose = require('mongoose')
 const path = require('path');
 
 const config = require('./config/config')
 
-// const io = require('socket.io')();
-// io.on('connection', () => { console.log('Conectado') });
 
-var cors = require('cors')
+const cors = require('cors')
 
 const app = express()
 const {mongoose} = require('./database')
 
 
-// require('./config/passport')
-
-// const MongoStore = require('connect-mongo')(session);
-
 //Setting
+
+//Cors app
+// app.use(cors())
+
 //We tell the app to congigure to use the port provided by the operating system
 //app.head("Access-Control-Allow-Origin: *");
 app.set('port', process.env.PORT || 3001)
 
 
-
-
 //Middlewares
-//Cors app
-app.use(cors())
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Credentials", "true");
+    // res.header("Access-Control-Allow-Methods": 'GET,PUT,POST,DELETE,OPTIONS',
+    // 'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With'
+    next();
+  });
+  
 
 app.use(session({
     secret: "Secret",
@@ -62,26 +63,6 @@ app.use(bodyParser.urlencoded({extended: true}))
 // app.use(express.json());
 //To see details of the requests
 app.use(morgan('dev'))
-
-// app.use(session({
-//   secret: 'secret',
-//   // resave: true,
-//   // saveUninitialized: true
-//   resave: false, // investigar mas -> https://www.npmjs.com/package/express-session 
-//   saveUninitialized: false, 
-//   store: new MongoStore({ 
-//     mongooseConnection: mongoose
-//   }) 
-// }))
-// app.use(passport.initialize())
-// app.use(passport.session())
-// app.use(flash());
-
-
-// Global Variables
-// app.use((req, res, next) => {
-//   next();
-// });
 
 
 //Routes
