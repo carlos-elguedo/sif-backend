@@ -4,13 +4,9 @@
  * File in charge of managing and controlling the operations requested to the api
  */
 const passport = require('passport');
-
 const User = require('../models/User')
-
-
-
-
 const validator = require('../utils/validator')
+const utils = require('../utils/index')
 
 //Controller to export
 const userCtrl = {}
@@ -18,6 +14,7 @@ const userCtrl = {}
 userCtrl.postSingup = async (req, res, next) =>{
 
     const {register_name, register_data_register, register_password, register_age, register_type} = req.body
+    let canSaveUser = true;
 
     const newUser = new User({
         name: register_name,
@@ -29,9 +26,13 @@ userCtrl.postSingup = async (req, res, next) =>{
     newUser.password = await newUser.encryptPassword(register_password);
     
     
-    User.findOne({data_register: register_data_register}, (err, existUser)=>{
+    await User.findOne({data_register: register_data_register}, (err, existUser)=>{
         if(existUser){
-            return res.status(400).send('Ya existe un usuario con el dato suministrado');
+            return res.json({
+                message: 'Ya existe un usuario con el dato suministrado',
+                option: "OK",	
+                type_error: 1,	
+            });
         }
     });
 
@@ -43,15 +44,17 @@ userCtrl.postSingup = async (req, res, next) =>{
             if(err){
                 next(err);
             }
+            let redirect = utils.getUserType(register_type)
             res.json({	
                 message: "Registro exitoso",	
                 option: "Perfect!",	
                 type_error: -1,	
-                redirect: register_type	
+                redirect: redirect
             })
-            // res.send('Usuario creado exitosamente')
+
         })
     });
+    
 }
 
 userCtrl.postLogin = async (req, res, next) =>{
@@ -69,24 +72,13 @@ userCtrl.postLogin = async (req, res, next) =>{
             if(err){
                 next(err);
             }
-            console.log("log pased ", user.type);
-            let redirect = ''
-            switch(user.type){
-                case '1':
-                    redirect = 'client'	
-                    break;
-                case '2':
-                    redirect = 'worker'	
-                    break;
-            }
-            console.log('Login buenooooooooooooooooooooooooooooooooooooooo')
+            let redirect = utils.getUserType(user.type)
              res.json({	
                 message: "Login exitoso",	
                 option: "Perfect!",	
                 type_error: -1,	
                 redirect: redirect	
             })
-            //res.send('Login exitoso');
         })
     })(req, res, next);
 }

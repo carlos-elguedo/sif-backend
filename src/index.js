@@ -75,6 +75,9 @@ app.use('/api/rest/profession', require('./routes/professionrouter'))
 //Route of the utilist from the backend to frontend
 app.use('/api/rest/utils', require('./routes/utilsRouter'))
 
+//Route of the workers
+app.use('/api/rest/worker', require('./routes/workerRouter'))
+
 // static files
 //console.log(app.use(express.static(path.join(__dirname, 'assets'))))
 app.use('/', express.static(path.join(__dirname, 'assets')));

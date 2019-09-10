@@ -30,7 +30,9 @@ router.get('/logout', passportConfig.userIsAuthenticated, userCtrl.getLogOut)
 // router.options('/info', cors());
 
 router.get('/info', passportConfig.userIsAuthenticated, (req, res)=> {
-    res.json(req.user);
+    const {age, name, type, _id, data_register, status} = req.user
+    // if()
+    res.json({age, name, type, _id, data_register, status});
 })
 
 module.exports = router

@@ -17,7 +17,9 @@ router.get('/', UtilsCtrl.test)
 
 // List of all professions
 router.get('/userIsLogged', passportConfig.userIsAuthenticated, (req, res)=> {
-    res.json(req.user);
+    if(req.user){
+        res.send('Logout exitoso');
+    }
 })
 // router.get('/userIsLogged', (req, res)=> {
 //     res.json('hOLA PERRP');
