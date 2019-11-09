@@ -11,6 +11,12 @@ const utils = require('../utils/index')
 //Controller to export
 const userCtrl = {}
 
+/*Error types
+    -1 No error
+    1 User exists
+    2 Email or password invalid
+*/
+
 userCtrl.postSingup = async (req, res, next) =>{
 
     const {register_name, register_data_register, register_password, register_age, register_type} = req.body
@@ -44,7 +50,7 @@ userCtrl.postSingup = async (req, res, next) =>{
             if(err){
                 next(err);
             }
-            let redirect = utils.getUserType(register_type)
+            let redirect = utils.getUserType(newUser.type)
             res.json({	
                 message: "Registro exitoso",	
                 option: "Perfect!",	
@@ -59,13 +65,18 @@ userCtrl.postSingup = async (req, res, next) =>{
 
 userCtrl.postLogin = async (req, res, next) =>{
     console.log('Llego al login');
+    
     passport.authenticate('local', (err, user, info)=>{
-        
         if(err){
-            next(err);
+            console.log('Error during the process', err)
         }
+        console.log(user);
         if(!user){
-            return res.status(400).send('Email o contraseña no validos desde el controller');
+            return res.json({	
+                message: "Email o contraseña invalidos",	
+                option: "OK",	
+                type_error: 2
+            })
         }
 
         req.logIn(user, (err)=>{
@@ -85,7 +96,13 @@ userCtrl.postLogin = async (req, res, next) =>{
 
 userCtrl.getLogOut = async (req, res) =>{
     req.logout();
-    res.send('Logout exitoso');
+    //res.send('Logout exitoso');
+    res.json({	
+        message: "Logout successfully",	
+        option: "Perfect!",	
+        type_error: -1,	
+        redirect: ''	
+    })
 }
 
 

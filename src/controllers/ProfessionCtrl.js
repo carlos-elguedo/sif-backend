@@ -14,21 +14,15 @@ const ProfessionCtrl = {}
 
 
 
-ProfessionCtrl.getProfessions = async (req, res) =>{    
-
+ProfessionCtrl.getProfessions = async (req, res) =>{
+    const professions = await Profession.find().sort({'name_es': 1})
+    res.json(professions)
 }
 
 ProfessionCtrl.getCategories = async (req, res) =>{
     const categories = await Category.find().sort({'name_es': 1})
     res.json(categories)
 }
-
-
-ProfessionCtrl.login = async (req, res) =>{
-    
-
-}
-
 
 
 ProfessionCtrl.test = async (req, res) =>{

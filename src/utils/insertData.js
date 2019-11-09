@@ -740,4 +740,6 @@ insertProfessiones = async() =>{
 }
 
 // insertCategorias()
-insertProfessiones()
+//insertProfessiones()
+
+insertCategorias()

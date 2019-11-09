@@ -1,13 +1,15 @@
 
 function getUserType(user){
     let redirect = ''
-    switch(user){
-        case '1', 1:
+    switch(+user){
+        case 1:
             redirect = 'client'	
             break;
-        case '2', 2:
+        case 2:
             redirect = 'worker'	
             break;
+        default:
+            console.log('the user type is invalid')
     }
     return redirect
   };
