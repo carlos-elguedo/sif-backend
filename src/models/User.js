@@ -16,8 +16,13 @@ const User = new Schema({
     age: {type: Date},
     type: {type: String},
     createdAt: {type: Date, default: Date.now()},
-    status: {type: Boolean, default: true}
-
+    status: {type: Boolean, default: true},
+    firstName: {type: String},
+    lastName: {type: String},
+    email: {type: String},
+    phone: {type: String},
+    profileImage: {type: String},
+    address : {type: String}
 })
 
 User.methods.toUpper = async function () {
