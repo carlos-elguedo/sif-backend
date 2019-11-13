@@ -14,22 +14,26 @@
 function verifiUserToRegister(user){
     var ret = 0;
 
-    //console.log("User name: " + user.register_name);
+    //console.log("User name: " + user);
     if(user.register_name !== "" && user.register_data_register !== "" && user.register_password !== "" && user.register_age !== ""){
-        // console.log("Info correct");
+        //console.log("Info correct", user.register_using);
 
         //First, we check the info
         if(correctLength(user.register_name, 4) && correctLength(user.register_password, 6) && correctDate(user.register_age) && correctUserType(user.register_type) ){
             // console.log("size correct")
-
+            let register_with = user.register_using?user.register_using:0;
             //Now, we check the data for the register
-            if(correctEmail(user.register_data_register)){
-                // console.log("email correct");
-                ret = 10;
-            }else{
-                // console.log("email incorrect: " + user.register_data_register);
-                correctNumberPhone(user.register_data_register)? ret = 11: ret = 2;
-                //ret = 3;
+            switch(+register_with){
+                case 0:
+                    //console.log('Cheking email')
+                    correctEmail(user.register_data_register)? ret = 10: ret = 2;
+                    break;
+                case 1:
+                    //console.log('Cheking phone')
+                    correctNumberPhone(user.register_data_register)? ret = 11: ret = 2;
+                    break;
+                default:
+                    break;
             }
         }else{
             // console.log("size incorrect");
@@ -136,6 +140,7 @@ function correctEmail(posibleEmail){
     }else{
         ret = true;
     }
+    //console.log('Email correcto: ', ret);
     return ret;
 }
 

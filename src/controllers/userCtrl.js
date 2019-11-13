@@ -19,16 +19,34 @@ const userCtrl = {}
 
 userCtrl.postSingup = async (req, res, next) =>{
 
-    const {register_name, register_data_register, register_password, register_age, register_type} = req.body
-    let canSaveUser = true;
+    const {register_name, register_data_register, register_password, register_age, register_type, register_using} = req.body
+    let canSaveUser = validator.verifiUserToRegister(req.body);
+
+    /**
+     * incorrect:
+     * ret: 0-> Info empty
+     * ret: 1-> the data no meet the size minumum
+     * ret: 2-> Email or number phone not valid
+     *
+     * succes
+     * ret: 10-> info correct, register with email
+     * ret: 11-> info correct, register with number phone
+     *
+     */
+    console.log('register_using', register_using);
 
     const newUser = new User({
         name: register_name,
         data_register: register_data_register,
         password: register_password,
         age: register_age,
-        type: register_type
+        type: register_type,
+        email: !+register_using?register_data_register:'',
+        phone: +register_using?register_data_register:'',
     });
+
+    console.log('User:', newUser)
+
     newUser.password = await newUser.encryptPassword(register_password);
     
     
