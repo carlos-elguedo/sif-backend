@@ -10,10 +10,8 @@ const router = express.Router()
 
 const WorkerCtrl = require('../controllers/WorkerCtrl.js')
 
-// List of all professions
-router.get('/', passportConfig.userIsAuthenticated, (req, res)=> {
-    res.json(req.user);
-})
+//Update profile
+router.put('/update', passportConfig.userIsAuthenticated, WorkerCtrl.update)
 
 
 module.exports = router

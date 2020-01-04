@@ -15,5 +15,14 @@ WorkerCtrl.test = async (req, res) =>{
 
 }
 
+WorkerCtrl.update = async (req, res) =>{
+    console.log(req.body)
+    console.log(req.user)
+    res.json({
+        status: "Llego al test",
+    })
+
+}
+
 
 module.exports = WorkerCtrl
