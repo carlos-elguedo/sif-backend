@@ -43,6 +43,7 @@ userCtrl.postSingup = async (req, res, next) =>{
         type: register_type,
         email: !+register_using?register_data_register:'',
         phone: +register_using?register_data_register:'',
+        city: 1
     });
 
     console.log('User:', newUser)

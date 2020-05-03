@@ -7,8 +7,8 @@ const mongoose = require('mongoose')
 const {Schema} = mongoose
 
 const Workman = new Schema({
-    id_user: {type: String},
-    profession: {type: String},
+    id_user: {type: Object},
+    profession: {type: Object},
     createdAt: {type: Date, default: Date.now()},
     status: {type: Boolean, default: false}
     
