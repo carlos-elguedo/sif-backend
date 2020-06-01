@@ -19,7 +19,7 @@ const userCtrl = {}
 
 userCtrl.postSingup = async (req, res, next) =>{
 
-    const {register_name, register_data_register, register_password, register_age, register_type, register_using} = req.body
+    const {register_name, register_data_register, register_firstName, register_lastName, register_password, register_age, register_type, register_using} = req.body
     let canSaveUser = validator.verifiUserToRegister(req.body);
 
     /**
@@ -36,14 +36,16 @@ userCtrl.postSingup = async (req, res, next) =>{
     console.log('register_using', register_using);
 
     const newUser = new User({
-        name: register_name,
+        name: `${register_firstName} ${register_lastName}`,
         data_register: register_data_register,
         password: register_password,
         age: register_age,
         type: register_type,
         email: !+register_using?register_data_register:'',
         phone: +register_using?register_data_register:'',
-        city: 1
+        city: 1,
+        firstName: register_firstName,
+        lastName: register_lastName
     });
 
     console.log('User:', newUser)
