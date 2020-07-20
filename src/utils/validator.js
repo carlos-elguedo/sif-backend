@@ -178,11 +178,12 @@ function verifyUserWorkerToUpdate(data) {
     if(edit_area_code)ret.toUpdate.push(CONSTANTS.props_to_update.area_code);
     if(edit_address)ret.toUpdate.push(CONSTANTS.props_to_update.address);
 
-    if(codeCategorieSelect)ret.toUpdate.push(CONSTANTS.props_to_update.categorie);
-    if(codeProfessionSelect)ret.toUpdate.push(CONSTANTS.props_to_update.profession);
+    //if(codeCategorieSelect)ret.toUpdate.push(CONSTANTS.props_to_update.categorie);
+    if(codeCategorieSelect && codeProfessionSelect)ret.toUpdate.push(CONSTANTS.props_to_update.profession);
 
     ret.message = 'Correcto';
     ret.correct = true;
+    ret.type = '';
   }
 
   return ret;

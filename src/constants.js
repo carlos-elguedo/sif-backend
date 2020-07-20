@@ -8,5 +8,12 @@ module.exports = {
         phone: 'PHONE',
         area_code: 'PHONE_AREA',
         address: 'ADDRESS'
+    },
+    cities: {
+        CARTAGENA: 1
+    },
+    countries: {
+        COLOMBIA: 1
     }
+
 }
