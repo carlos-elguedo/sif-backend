@@ -119,7 +119,8 @@ const changeInformation = async ({
   firstName,
   lastName,
   email,
-  phone
+  phone,
+  address
 }) => {
   let ret = false;
   let user = await User.findOne({ data_register });
@@ -134,10 +135,12 @@ const changeInformation = async ({
 
   //email and phone
   let em = email || user.email,
-    ph = phone || user.phone;
+    ph = phone || user.phone
+    ad = address || user.address;
 
   user.email = em;
   user.phone = ph;
+  user.address = ad;
 
   //---------------
   await user.save();

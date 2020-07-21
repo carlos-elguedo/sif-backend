@@ -47,7 +47,8 @@ WorkerCtrl.update = async (req, res) => {
       edit_first_name: firstName,
       edit_last_name: lastName,
       edit_email: email,
-      edit_phone: phone
+      edit_phone: phone,
+      edit_address: address
     } = body;
 
     const { toUpdate } = correct_data;
@@ -67,12 +68,14 @@ WorkerCtrl.update = async (req, res) => {
         case CONSTANTS.props_to_update.last_name:
         case CONSTANTS.props_to_update.email:
         case CONSTANTS.props_to_update.phone:
+        case CONSTANTS.props_to_update.address:
           WASUPDATED_DATA_PERSONAL = await userRepository.changeInformation({
             data_register,
             firstName,
             lastName,
             email,
-            phone
+            phone,
+            address
           });
           break;
         default:
