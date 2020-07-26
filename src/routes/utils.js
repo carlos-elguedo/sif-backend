@@ -9,7 +9,7 @@ const router = express.Router()
 
 // router.use(cors())
 
-const UtilsCtrl = require('../controllers/UtilsCtrl.js')
+const UtilsCtrl = require('../controllers/utilsCtrl')
 
 //Get all the data
 router.get('/', UtilsCtrl.test)

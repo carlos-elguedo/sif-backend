@@ -67,16 +67,19 @@ app.use(morgan('dev'))
 
 //Routes
 //Route of the api access
-app.use('/api/rest/access', require('./routes/accessrouter'))
+app.use('/api/rest/access', require('./routes/access'))
 
 //Route of the api professions
-app.use('/api/rest/profession', require('./routes/professionrouter'))
+app.use('/api/rest/profession', require('./routes/profession'))
 
 //Route of the utilist from the backend to frontend
-app.use('/api/rest/utils', require('./routes/utilsRouter'))
+app.use('/api/rest/utils', require('./routes/utils'))
 
 //Route of the workers
-app.use('/api/rest/worker', require('./routes/workerRouter'))
+app.use('/api/rest/worker', require('./routes/worker'))
+
+//Route of the upload of files
+app.use('/api/rest/uploads', require('./routes/upload'))
 
 // static files
 //console.log(app.use(express.static(path.join(__dirname, 'assets'))))

@@ -7,7 +7,7 @@ const express = require('express');
 const passportConfig = require('../config/passport');
 const router = express.Router();
 
-const WorkerCtrl = require('../controllers/WorkerCtrl.js');
+const WorkerCtrl = require('../controllers/workerCtrl');
 
 //Update profile
 router.put('/update', passportConfig.userIsAuthenticated, WorkerCtrl.update);

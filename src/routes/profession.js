@@ -9,7 +9,7 @@ const router = express.Router()
 
 // router.use(cors())
 
-const ProfessionCtrl = require('../controllers/ProfessionCtrl')
+const ProfessionCtrl = require('../controllers/professionCtrl')
 
 //Get all the data
 router.get('/', ProfessionCtrl.test)
