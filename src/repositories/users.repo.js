@@ -25,7 +25,7 @@ const getWorkerData = async id => {
   data.age_count = Math.abs(moment(user.age).diff(moment(), 'years'));
   data.address = user.address || '';
   data.type = user.type;
-  //data.profileImage =
+  data.profileImage = user.profileImage || '';
 
   //worker data
   let works = await Workman.find({ id_user: id });
@@ -114,6 +114,14 @@ const changeProfession = async ({
   return ret;
 };
 
+const changeImageProfile = async (id_user, filename) => {
+  let user = await User.findOne({ _id: id_user });
+  if (!user) return false;
+  user.profileImage = filename;
+  await user.save();
+  return true;
+};
+
 const changeInformation = async ({
   data_register,
   firstName,
@@ -135,8 +143,8 @@ const changeInformation = async ({
 
   //email and phone
   let em = email || user.email,
-    ph = phone || user.phone
-    ad = address || user.address;
+    ph = phone || user.phone;
+  ad = address || user.address;
 
   user.email = em;
   user.phone = ph;
@@ -148,4 +156,9 @@ const changeInformation = async ({
   return ret;
 };
 
-module.exports = { changeProfession, getWorkerData, changeInformation };
+module.exports = {
+  changeProfession,
+  getWorkerData,
+  changeInformation,
+  changeImageProfile
+};

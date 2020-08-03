@@ -27,7 +27,6 @@ WorkerCtrl.getWorker = async (req, res) => {
   const { _id } = req.user;
 
   const data = await userRepository.getWorkerData(_id);
-  //console.log("WorkerCtrl.getWorker -> data", data)
 
   res.send(data);
 };

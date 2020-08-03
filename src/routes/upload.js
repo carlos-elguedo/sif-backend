@@ -11,7 +11,7 @@ const UploadCtrl = require('../controllers/uploadCtrl')
 
 
 // List of all professions
-router.post('/profile', /* passportConfig.userIsAuthenticated, */ UploadCtrl.profile)
+router.post('/profile', passportConfig.userIsAuthenticated, UploadCtrl.profile)
 
 router.get('/', (req, res)=> {
      res.json('HOLA');
