@@ -7,13 +7,15 @@
 const User = require('../models/User');
 const Workman = require('../models/Workman');
 const Profession = require('../models/Profession');
+const ProfessionGroup = require('../models/ProfessionGroup');
 
 const moment = require('moment');
 const { cities } = require('../constants');
 
 //Get's
 const getWorkerData = async id => {
-  let data = {};
+  let data = {},
+    mainWork = true;
   let user = await User.findOne({ _id: id });
 
   //user data
@@ -35,15 +37,27 @@ const getWorkerData = async id => {
     await Promise.all(
       works.map(async work => {
         let profession = await Profession.findById(work.profession);
-        if (profession) {
+        let categorie = await ProfessionGroup.findOne({
+          cod: profession.group[0] || '---'
+        });
+
+        if (profession && categorie) {
           let professionData = {
             group: profession.group,
             name_es: profession.name_es,
-            name_es: profession.name_es,
+            name_en: profession.name_en,
             code: profession.cod,
             city: profession.city
           };
           data.works.push(professionData);
+          //Added the defult work
+          if (mainWork) {
+            data.professionName_es = profession.name_es;
+            data.professionName_en = profession.name_en;
+            data.categorieName_es = categorie.name_es;
+            data.categorieName_en = categorie.name_en;
+            mainWork = false;
+          }
         }
       })
     );
