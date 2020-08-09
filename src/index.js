@@ -94,6 +94,9 @@ app.use('/api/rest/utils', require('./routes/utils'))
 //Route of the workers
 app.use('/api/rest/worker', require('./routes/worker'))
 
+//Route of the Clients
+app.use('/api/rest/client', require('./routes/client'))
+
 //Route of the upload of files
 app.use('/api/rest/uploads', require('./routes/upload'))
 

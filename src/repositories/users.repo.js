@@ -66,6 +66,23 @@ const getWorkerData = async id => {
   return data;
 };
 
+const getClientData = async id => {
+  let data = {};
+  let user = await User.findOne({ _id: id });
+  if (!user) return {};
+  //user data
+  data.name = user.name || '';
+  data.email = user.email || '';
+  data.phone = user.phone || '';
+  data.firstName = user.firstName || '';
+  data.lastName = user.lastName || '';
+  data.age_count = Math.abs(moment(user.age).diff(moment(), 'years'));
+  data.address = user.address || '';
+  data.type = user.type;
+  data.profileImage = user.profileImage || '';
+  return data;
+};
+
 //Updates
 const changeProfession = async ({
   data_register,
@@ -174,5 +191,6 @@ module.exports = {
   changeProfession,
   getWorkerData,
   changeInformation,
-  changeImageProfile
+  changeImageProfile,
+  getClientData
 };
