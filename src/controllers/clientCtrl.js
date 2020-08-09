@@ -23,7 +23,6 @@ clientCtrl.getClient = async (req, res) => {
   const { _id } = req.user;
 
   const data = await userRepository.getClientData(_id);
-  console.log('clientCtrl.getClient -> data', data);
 
   res.send(data);
 };
