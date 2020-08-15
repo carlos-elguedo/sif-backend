@@ -1,0 +1,32 @@
+scalar Date
+scalar DateTime
+
+type Query {
+  searchWorkers(data: findWorkerInput): workerCustomResponse!
+}
+
+input findWorkerInput {
+  q: String
+  order: String
+  sortBy: String
+  limit: Int
+  offset: Int
+}
+
+type worker {
+  id: String
+  firstName: String!
+  middleName: String
+  lastName: String!
+  number: String
+  active: Boolean
+  email: String
+}
+
+type workerCustomResponse {
+  """ employees: [worker]!
+  licenses: [customLicense]! """
+  size: Int!
+  limit: Int!
+  offset: Int!
+}

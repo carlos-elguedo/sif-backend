@@ -12,6 +12,7 @@ const passport = require('passport')
 const bodyParser = require('body-parser')
 const path = require('path');
 const os = require("os");
+const graphQlserver = require('./graphql/server');
 
 const config = require('./config/config')
 
@@ -23,7 +24,7 @@ const {mongoose} = require('./database')
 
 
 //Setting
-
+graphQlserver.applyMiddleware({ app });
 //Cors app
 // app.use(cors())
 
