@@ -107,4 +107,9 @@ WorkerCtrl.update = async (req, res) => {
   }
 };
 
+WorkerCtrl.searchWorker = async (req, res) => {
+  req.params;
+  console.log('WorkerCtrl.searchWorker -> req.params', req.params);
+  res.send({ message: 'Ok', size: 200, offset: 10, limit: 10 });
+};
 module.exports = WorkerCtrl;

@@ -20,18 +20,13 @@ module.exports = {
         limit = 10,
         offset = 0,
         q = '',
-        sortBy = '',
+        sortBy = 'firstName',
         order = 'asc'
       } = data;
 
-      console.log("authInfo", authInfo)
       const {
-        id: userId,
-        employerId,
-        canViewAllEmployees,
-        canViewUnlicensedEmployees: canViewUnlicensed
+        id,
       } = authInfo;
-      
 
       const response = await dataSources.SIFApiRestCore.searchWorkers({
         q,

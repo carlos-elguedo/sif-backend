@@ -16,7 +16,7 @@ module.exports = class SIFApiRestCore extends RESTDataSource {
     sortBy = 'firstName'
   }) {
     return this.get(
-      `/employers/${employerId}/employees?` +
+      `/worker/search?` +
         stringifyQueryParams({
           limit,
           offset,

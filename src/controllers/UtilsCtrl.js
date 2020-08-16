@@ -5,15 +5,12 @@
  */
 
 //Controller to export
-const UtilsCtrl = {}
+const UtilsCtrl = {};
 
-UtilsCtrl.test = async (req, res) =>{
+UtilsCtrl.test = async (req, res) => {
+  res.json({
+    status: 'Llego al test'
+  });
+};
 
-    res.json({
-        status: "Llego al test",
-    })
-
-}
-
-
-module.exports = UtilsCtrl
+module.exports = UtilsCtrl;
