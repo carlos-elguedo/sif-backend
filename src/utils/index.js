@@ -32,4 +32,35 @@ const stringifyQueryParams = params => {
   return queryString.join('&');
 };
 
-module.exports = { getUserType, stringifyQueryParams };
+const mapResultsWorkers = data => {
+  const result = data.map(ele => {
+    const { user_data, profession_data } = ele;
+    return {
+      id: ele._id,
+      idUser: ele.id_user,
+      name: user_data[0].name,
+      status: ele.status,
+      data_register: user_data[0].data_register,
+      type: user_data[0].type,
+      firstName: user_data[0].firstName,
+      lastName: user_data[0].lastName,
+      email: user_data[0].email,
+      phone: user_data[0].phone,
+      address: user_data[0].address,
+      profileImage: user_data[0].profileImage,
+      profession: {
+        id: profession_data[0]._id,
+        codeGroup: profession_data[0].group.toString(),
+        name_es: profession_data[0].name_es,
+        name_en: profession_data[0].name_en,
+        cod: profession_data[0].cod,
+        description: profession_data[0].description,
+        city: profession_data[0].city[0]
+      }
+    };
+  });
+
+  return result;
+};
+
+module.exports = { getUserType, stringifyQueryParams, mapResultsWorkers };

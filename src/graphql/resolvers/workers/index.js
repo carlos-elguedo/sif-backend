@@ -35,13 +35,10 @@ module.exports = {
         offset,
         limit
       });
-      console.log("response", response)
-
-      //const licenses = mapCustomLicense(response);
+      console.log("response", response.workers.length)
 
       return {
-        /* employees: mapEmployees(response.items),
-        licenses, */
+        workers: response.workers,
         offset: response.offset,
         limit: response.limit,
         size: response.size

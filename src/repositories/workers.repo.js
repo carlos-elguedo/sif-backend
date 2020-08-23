@@ -4,19 +4,13 @@
  * File in charge ofacced and modify the data in the database
  */
 
-const User = require('../models/User');
 const Workman = require('../models/Workman');
 const Profession = require('../models/Profession');
-const ProfessionGroup = require('../models/ProfessionGroup');
+const { mapResultsWorkers } = require('../utils');
 
-const moment = require('moment');
-const { cities } = require('../constants');
-
-//Get's
 
 const searchWorkers = async ({ q, offset, order, limit, sortBy, lang }) => {
-  console.log('searchWorkers va a buscar -> q', q);
-  let data = {};
+  let data = [];
   let SEARCH_NAME = `name_${lang}`;
 
   /**1. Buscar las professions por el q
@@ -66,6 +60,8 @@ const searchWorkers = async ({ q, offset, order, limit, sortBy, lang }) => {
   ]);
 
   if (!workManFound.length) return data;
+
+  data = mapResultsWorkers(workManFound);
 
   return data;
 };

@@ -14,18 +14,33 @@ input findWorkerInput {
 }
 
 type worker {
-  id: String
-  firstName: String!
-  middleName: String
-  lastName: String!
-  number: String
-  active: Boolean
+  id: String!
+  idUser: String!
+  name: String!
+  status: Boolean!
+  data_register: String!
+  type: Int,
+  firstName: String
+  lastName: String
   email: String
+  phone: String
+  address: String
+  profileImage: String
+  profession: profession
+}
+
+type profession {
+  id: String!
+  codeGroup: String!
+  name_es: String!
+  name_en: String!
+  city: Int
+  cod: String!
+  description: String
 }
 
 type workerCustomResponse {
-  """ employees: [worker]!
-  licenses: [customLicense]! """
+  workers: [worker]!
   size: Int!
   limit: Int!
   offset: Int!

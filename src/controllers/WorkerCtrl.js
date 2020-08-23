@@ -80,7 +80,7 @@ WorkerCtrl.update = async (req, res) => {
           });
           break;
         default:
-          console.log('ENTRO AL DEFAULT', change);
+          console.log('DEFAULT change profile', change);
       }
     }
 
@@ -112,7 +112,7 @@ WorkerCtrl.update = async (req, res) => {
 WorkerCtrl.searchWorker = async (req, res) => {
   const { q, offset, order, limit, sortBy } = req.query;
 
-  workerRepository.searchWorkers({
+  const data = await workerRepository.searchWorkers({
     q,
     offset,
     order,
@@ -121,6 +121,23 @@ WorkerCtrl.searchWorker = async (req, res) => {
     lang: 'es'
   });
 
-  res.send({ message: 'Ok', size: 200, offset: 10, limit: 10 });
+  if (data.length === 0)
+    res
+      .status(202)
+      .send({
+        message: 'No workers found',
+        workers: [],
+        size: 0,
+        offset: 0,
+        limit: 0
+      });
+
+  res.send({
+    message: 'Ok',
+    workers: data,
+    size: data.length,
+    offset: 10,
+    limit: 10
+  });
 };
 module.exports = WorkerCtrl;
