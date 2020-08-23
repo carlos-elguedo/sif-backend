@@ -14,6 +14,8 @@ const CONSTANTS = require('../constants');
 
 const userRepository = require('../repositories/users.repo');
 
+const workerRepository = require('../repositories/workers.repo');
+
 //Controller to export
 const WorkerCtrl = {};
 
@@ -108,8 +110,17 @@ WorkerCtrl.update = async (req, res) => {
 };
 
 WorkerCtrl.searchWorker = async (req, res) => {
-  req.params;
-  console.log('WorkerCtrl.searchWorker -> req.params', req.params);
+  const { q, offset, order, limit, sortBy } = req.query;
+
+  workerRepository.searchWorkers({
+    q,
+    offset,
+    order,
+    limit,
+    sortBy,
+    lang: 'es'
+  });
+
   res.send({ message: 'Ok', size: 200, offset: 10, limit: 10 });
 };
 module.exports = WorkerCtrl;
