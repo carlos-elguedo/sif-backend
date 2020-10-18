@@ -13,7 +13,8 @@ module.exports = class SIFApiRestCore extends RESTDataSource {
     offset = 0,
     order = 'asc',
     q = '',
-    sortBy = 'firstName'
+    sortBy = 'firstName',
+    searchBy = 'profession'
   }) {
     return this.get(
       `/worker/search?` +
@@ -22,7 +23,8 @@ module.exports = class SIFApiRestCore extends RESTDataSource {
           offset,
           order,
           q,
-          sortBy
+          sortBy,
+          searchBy
         })
     );
   }

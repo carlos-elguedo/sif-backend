@@ -21,7 +21,8 @@ module.exports = {
         offset = 0,
         q = '',
         sortBy = 'firstName',
-        order = 'asc'
+        order = 'asc',
+        searchBy
       } = data;
 
       const {
@@ -33,7 +34,8 @@ module.exports = {
         order,
         sortBy,
         offset,
-        limit
+        limit,
+        searchBy
       });
       console.log("response", response.workers.length)
 

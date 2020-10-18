@@ -8,8 +8,15 @@ const Workman = require('../models/Workman');
 const Profession = require('../models/Profession');
 const { mapResultsWorkers } = require('../utils');
 
-
-const searchWorkers = async ({ q, offset, order, limit, sortBy, lang }) => {
+const searchWorkers = async ({
+  q,
+  offset,
+  order,
+  limit,
+  sortBy,
+  lang,
+  searchBy
+}) => {
   let data = [];
   let SEARCH_NAME = `name_${lang}`;
 
@@ -24,10 +31,25 @@ const searchWorkers = async ({ q, offset, order, limit, sortBy, lang }) => {
   9. Retorna la data*/
 
   if (!q) return data;
+  console.log('q', q);
 
-  const professionsFound = await Profession.find({
-    name_es: { $regex: q.toUpperCase() }
-  }).select([SEARCH_NAME]);
+  let professionsFound = [];
+
+  switch (searchBy) {
+    case 'profession':
+      console.log('Va a buscar por profession');
+      professionsFound = await Profession.find({
+        name_es: { $regex: q.toUpperCase() }
+      }).select([SEARCH_NAME]);
+      break;
+    case 'categorie':
+      console.log('Va a buscar por categoria');
+      professionsFound = await Profession.find({
+        group: { $in: [q] }
+      }).select([SEARCH_NAME]);
+      break;
+    default:
+  }
 
   if (!professionsFound.length) return data;
 

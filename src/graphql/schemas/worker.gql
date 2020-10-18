@@ -6,11 +6,12 @@ type Query {
 }
 
 input findWorkerInput {
-  q: String
+  q: String!
   order: String
   sortBy: String
   limit: Int
   offset: Int
+  searchBy: String!
 }
 
 type worker {

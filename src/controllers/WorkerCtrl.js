@@ -110,7 +110,7 @@ WorkerCtrl.update = async (req, res) => {
 };
 
 WorkerCtrl.searchWorker = async (req, res) => {
-  const { q, offset, order, limit, sortBy } = req.query;
+  const { q, offset, order, limit, sortBy, searchBy } = req.query;
 
   const data = await workerRepository.searchWorkers({
     q,
@@ -118,26 +118,26 @@ WorkerCtrl.searchWorker = async (req, res) => {
     order,
     limit,
     sortBy,
-    lang: 'es'
+    lang: 'es',
+    searchBy
   });
 
-  if (data.length === 0)
-    res
-      .status(202)
-      .send({
-        message: 'No workers found',
-        workers: [],
-        size: 0,
-        offset: 0,
-        limit: 0
-      });
-
-  res.send({
-    message: 'Ok',
-    workers: data,
-    size: data.length,
-    offset: 10,
-    limit: 10
-  });
+  if (data.length === 0) {
+    res.status(202).send({
+      message: 'No workers found',
+      workers: [],
+      size: 0,
+      offset: 0,
+      limit: 0
+    });
+  } else {
+    res.send({
+      message: 'Ok',
+      workers: data,
+      size: data.length,
+      offset: 10,
+      limit: 10
+    });
+  }
 };
 module.exports = WorkerCtrl;
