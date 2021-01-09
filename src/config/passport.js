@@ -40,7 +40,6 @@ passport.use(
 );
 
 exports.userIsAuthenticated = (req, res, next) => {
-  // console.log(req.headers)
   if (req.isAuthenticated()) {
     return next();
   }

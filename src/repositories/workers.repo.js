@@ -31,19 +31,14 @@ const searchWorkers = async ({
   9. Retorna la data*/
 
   if (!q) return data;
-  console.log('q', q);
-
   let professionsFound = [];
-
   switch (searchBy) {
     case 'profession':
-      console.log('Va a buscar por profession');
       professionsFound = await Profession.find({
         name_es: { $regex: q.toUpperCase() }
       }).select([SEARCH_NAME]);
       break;
     case 'categorie':
-      console.log('Va a buscar por categoria');
       professionsFound = await Profession.find({
         group: { $in: [q] }
       }).select([SEARCH_NAME]);
