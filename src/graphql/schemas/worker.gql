@@ -1,0 +1,48 @@
+scalar Date
+scalar DateTime
+
+type Query {
+  searchWorkers(data: findWorkerInput): workerCustomResponse!
+}
+
+input findWorkerInput {
+  q: String!
+  order: String
+  sortBy: String
+  limit: Int
+  offset: Int
+  searchBy: String!
+}
+
+type worker {
+  id: String!
+  idUser: String!
+  name: String!
+  status: Boolean!
+  data_register: String!
+  type: Int,
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+  address: String
+  profileImage: String
+  profession: profession
+}
+
+type profession {
+  id: String!
+  codeGroup: String!
+  name_es: String!
+  name_en: String!
+  city: Int
+  cod: String!
+  description: String
+}
+
+type workerCustomResponse {
+  workers: [worker]!
+  size: Int!
+  limit: Int!
+  offset: Int!
+}

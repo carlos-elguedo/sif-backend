@@ -8,8 +8,8 @@ const { Schema } = mongoose;
 
 const Profession = new Schema({
   group: [],
-  name_es: { type: String },
-  name_en: { type: String },
+  name_es: { type: String, uppercase: true },
+  name_en: { type: String, uppercase: true },
   cod: { type: String, unique: true },
   description: { type: String },
   city: [],

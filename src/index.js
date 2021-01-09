@@ -12,6 +12,7 @@ const passport = require('passport')
 const bodyParser = require('body-parser')
 const path = require('path');
 const os = require("os");
+const graphQlserver = require('./graphql/server');
 
 const config = require('./config/config')
 
@@ -23,7 +24,7 @@ const {mongoose} = require('./database')
 
 
 //Setting
-
+graphQlserver.applyMiddleware({ app });
 //Cors app
 // app.use(cors())
 
@@ -101,7 +102,6 @@ app.use('/api/rest/client', require('./routes/client'))
 app.use('/api/rest/uploads', require('./routes/upload'))
 
 // static files
-//console.log(app.use(express.static(path.join(__dirname, 'assets'))))
 app.use('/', express.static(path.join(__dirname, 'assets')));
 
 

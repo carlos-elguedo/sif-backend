@@ -14,6 +14,8 @@ const CONSTANTS = require('../constants');
 
 const userRepository = require('../repositories/users.repo');
 
+const workerRepository = require('../repositories/workers.repo');
+
 //Controller to export
 const WorkerCtrl = {};
 
@@ -78,7 +80,7 @@ WorkerCtrl.update = async (req, res) => {
           });
           break;
         default:
-          console.log('ENTRO AL DEFAULT', change);
+          console.log('DEFAULT change profile', change);
       }
     }
 
@@ -107,4 +109,35 @@ WorkerCtrl.update = async (req, res) => {
   }
 };
 
+WorkerCtrl.searchWorker = async (req, res) => {
+  const { q, offset, order, limit, sortBy, searchBy } = req.query;
+
+  const data = await workerRepository.searchWorkers({
+    q,
+    offset,
+    order,
+    limit,
+    sortBy,
+    lang: 'es',
+    searchBy
+  });
+
+  if (data.length === 0) {
+    res.status(202).send({
+      message: 'No workers found',
+      workers: [],
+      size: 0,
+      offset: 0,
+      limit: 0
+    });
+  } else {
+    res.send({
+      message: 'Ok',
+      workers: data,
+      size: data.length,
+      offset: 10,
+      limit: 10
+    });
+  }
+};
 module.exports = WorkerCtrl;
