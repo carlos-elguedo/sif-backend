@@ -140,4 +140,18 @@ WorkerCtrl.searchWorker = async (req, res) => {
     });
   }
 };
+
+WorkerCtrl.viewProfile = async (req, res) => {
+  const { id } = req.query;
+
+  if (!id)
+    res.status(400).send({
+      message: 'No workers to view'
+    });
+
+  const data = await workerRepository.getProfile(id);
+
+  res.send(data);
+};
+
 module.exports = WorkerCtrl;

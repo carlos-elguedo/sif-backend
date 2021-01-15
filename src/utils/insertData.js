@@ -242,12 +242,6 @@ const professions = [
         'cod':'MECA'
     },
     {
-        'esp':'Mantenimiento de vehículos',
-        'eng':'Vehicle maintenance',
-        'grp':'TAV',
-        'cod':'MANV'
-    },
-    {
         'esp':'Mudanzas',
         'eng':'Removals',
         'grp':'TAV',
@@ -424,7 +418,7 @@ const professions = [
         'eng':'Pallets and soil layers',
         'grp':'BUI',
         'cod':'ENCH'
-    },
+    },    
     // Sistemas informáticos
     {
         'esp':'Diseñador grafico',

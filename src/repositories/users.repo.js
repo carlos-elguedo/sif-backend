@@ -18,6 +18,8 @@ const getWorkerData = async id => {
     mainWork = true;
   let user = await User.findOne({ _id: id });
 
+  if (!user) return {};
+
   //user data
   data.name = user.name || '';
   data.email = user.email || '';
