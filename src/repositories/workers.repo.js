@@ -7,6 +7,7 @@
 const Workman = require('../models/Workman');
 const Profession = require('../models/Profession');
 const { mapResultsWorkers } = require('../utils');
+const userRepository = require('./users.repo');
 
 const searchWorkers = async ({
   q,
@@ -83,6 +84,27 @@ const searchWorkers = async ({
   return data;
 };
 
+const getProfile = async idWorkman => {
+  const workerInfo = await Workman.findById(idWorkman);
+
+  if (!workerInfo) return {};
+
+  const { id_user } = workerInfo;
+
+  const workerData = await userRepository.getWorkerData(id_user);
+
+  if (!workerInfo) return {};
+
+  const banner = workerData.works.length ? workerData.works[0].code : '';
+
+  return {
+    banner,
+    profileImage: workerData.profileImage,
+    info: workerData
+  };
+};
+
 module.exports = {
-  searchWorkers
+  searchWorkers,
+  getProfile
 };
