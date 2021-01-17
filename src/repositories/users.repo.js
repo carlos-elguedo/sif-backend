@@ -73,6 +73,7 @@ const getClientData = async id => {
   let user = await User.findOne({ _id: id });
   if (!user) return {};
   //user data
+  data.data_register = user.data_register || '';
   data.name = user.name || '';
   data.email = user.email || '';
   data.phone = user.phone || '';
@@ -161,11 +162,13 @@ const changeInformation = async ({
   lastName,
   email,
   phone,
-  address
+  address,
+  areaCodePhone = '',
+  id = false
 }) => {
   let ret = false;
-  let user = await User.findOne({ data_register });
-
+  const condition = id ? { _id: id } : { data_register };
+  let user = await User.findOne(condition);
   if (!user) return ret;
 
   let fn = firstName || user.firstName,

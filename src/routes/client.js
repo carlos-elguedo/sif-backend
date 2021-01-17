@@ -12,4 +12,6 @@ const clientCtrl = require('../controllers/clientCtrl');
 
 router.get('/', passportConfig.userIsAuthenticated, clientCtrl.getClient);
 
+router.put('/update', passportConfig.userIsAuthenticated, clientCtrl.update);
+
 module.exports = router;
