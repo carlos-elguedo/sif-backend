@@ -159,7 +159,7 @@ function verifyUserClientToUpdate(data) {
 
   result.message = 'Correcto';
   result.correct = true;
-  result.type = '';
+  result.type = 'OK';
   return result;
 }
 
