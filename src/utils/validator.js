@@ -10,7 +10,7 @@
  *
  */
 
-const CONSTANTS = require('../constants')
+const CONSTANTS = require('../constants');
 
 function verifiUserToRegister(user) {
   var ret = 0;
@@ -100,6 +100,69 @@ function verifiUserToLogin(user) {
   return ret;
 }
 
+function verifyUserClientToUpdate(data) {
+  let result = {
+    correct: false,
+    message: 'Los datos estan vacios',
+    type: 'error',
+    toUpdate: []
+  };
+
+  //1. Check if the data is empty
+  let allIsEmpty = false;
+  Object.keys(data).forEach(prop => {
+    if (data[prop] !== '') allIsEmpty = false;
+  });
+  if (allIsEmpty) return result;
+
+  //2. Check lentgh and format
+  result.type = 'warning';
+  const { firstName, lastName, email, phone, areaCodePhone, address } = data;
+  if (firstName && !correctLength(firstName, 4)) {
+    result.message = 'El nombre debe contener al menos 4 caracteres';
+    return result;
+  }
+
+  if (lastName && !correctLength(lastName, 4)) {
+    result.message = 'El apellido debe contener al menos 4 caracteres';
+    return result;
+  }
+
+  if (email && !correctEmail(email)) {
+    result.message = 'El correo electronico no es correcto';
+
+    return result;
+  }
+
+  if (phone && !correctNumberPhone(phone)) {
+    result.message = 'El numero telefonico no es correcto';
+    return result;
+  }
+
+  if (areaCodePhone && !correctAreaCodePhone(areaCodePhone)) {
+    result.message = 'El Codigo de area ingresado no es correcto';
+    return result;
+  }
+
+  if (address && !correctLength(address, 10)) {
+    result.message = 'La direccion ingresada es muy corta';
+    return result;
+  }
+
+  //3. Check props to update
+  if (firstName) result.toUpdate.push(CONSTANTS.props_to_update.first_name);
+  if (lastName) result.toUpdate.push(CONSTANTS.props_to_update.last_name);
+  if (email) result.toUpdate.push(CONSTANTS.props_to_update.email);
+  if (phone) result.toUpdate.push(CONSTANTS.props_to_update.phone);
+  if (areaCodePhone) result.toUpdate.push(CONSTANTS.props_to_update.area_code);
+  if (address) result.toUpdate.push(CONSTANTS.props_to_update.address);
+
+  result.message = 'Correcto';
+  result.correct = true;
+  result.type = '';
+  return result;
+}
+
 function verifyUserWorkerToUpdate(data) {
   let ret = {
     correct: false,
@@ -107,8 +170,6 @@ function verifyUserWorkerToUpdate(data) {
     type: 'error',
     toUpdate: []
   };
-
-
 
   const {
     codeCategorieSelect,
@@ -118,7 +179,7 @@ function verifyUserWorkerToUpdate(data) {
     edit_email,
     edit_phone,
     edit_area_code,
-    edit_address,
+    edit_address
   } = data;
 
   //1. Validate empty values
@@ -171,15 +232,17 @@ function verifyUserWorkerToUpdate(data) {
 
     //Validate profession and categorie
 
-    if(edit_first_name)ret.toUpdate.push(CONSTANTS.props_to_update.first_name);
-    if(edit_last_name)ret.toUpdate.push(CONSTANTS.props_to_update.last_name);
-    if(edit_email)ret.toUpdate.push(CONSTANTS.props_to_update.email);
-    if(edit_phone)ret.toUpdate.push(CONSTANTS.props_to_update.phone);
-    if(edit_area_code)ret.toUpdate.push(CONSTANTS.props_to_update.area_code);
-    if(edit_address)ret.toUpdate.push(CONSTANTS.props_to_update.address);
+    if (edit_first_name)
+      ret.toUpdate.push(CONSTANTS.props_to_update.first_name);
+    if (edit_last_name) ret.toUpdate.push(CONSTANTS.props_to_update.last_name);
+    if (edit_email) ret.toUpdate.push(CONSTANTS.props_to_update.email);
+    if (edit_phone) ret.toUpdate.push(CONSTANTS.props_to_update.phone);
+    if (edit_area_code) ret.toUpdate.push(CONSTANTS.props_to_update.area_code);
+    if (edit_address) ret.toUpdate.push(CONSTANTS.props_to_update.address);
 
     //if(codeCategorieSelect)ret.toUpdate.push(CONSTANTS.props_to_update.categorie);
-    if(codeCategorieSelect && codeProfessionSelect)ret.toUpdate.push(CONSTANTS.props_to_update.profession);
+    if (codeCategorieSelect && codeProfessionSelect)
+      ret.toUpdate.push(CONSTANTS.props_to_update.profession);
 
     ret.message = 'Correcto';
     ret.correct = true;
@@ -270,8 +333,21 @@ function correctUserType(userType) {
   return ret;
 }
 
+/**
+ * Check Correct area code
+ * @param {text} code
+ */
+function correctAreaCodePhone(code) {
+  return (
+    (code.indexOf('+') >= 0 &&
+      /^\d{1,3}$/.test(code.substring(1, code.length))) ||
+    (/^\d+$/.test(code) && code.length <= 3)
+  );
+}
+
 module.exports = {
   verifiUserToRegister,
   verifiUserToLogin,
   verifyUserWorkerToUpdate,
+  verifyUserClientToUpdate
 };
