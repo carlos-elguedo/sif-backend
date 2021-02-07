@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 const mongoose = require('mongoose');
 const User = require('../models/User');
@@ -38,6 +39,16 @@ passport.use(
     }
   )
 );
+
+passport.use(new FacebookStrategy({
+  clientID: "837299123785052",
+  clientSecret: "a4ce5d16814edc94bf4ac0d5752855ed",
+  callbackURL: "http://localhost:3001/auth/facebook/callback"
+},
+function(accessToken, refreshToken, profile, done) {
+  return done(null, profile);
+}
+));
 
 exports.userIsAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
