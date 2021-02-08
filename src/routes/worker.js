@@ -14,7 +14,10 @@ router.put('/update', passportConfig.userIsAuthenticated, WorkerCtrl.update);
 
 router.get('/', passportConfig.userIsAuthenticated, WorkerCtrl.getWorker);
 
-router.get('/search', /* passportConfig.userIsAuthenticated, */ WorkerCtrl.searchWorker);
+router.get(
+  '/search',
+  /* passportConfig.userIsAuthenticated, */ WorkerCtrl.searchWorker
+);
 
 router.get('/view', passportConfig.userIsAuthenticated, WorkerCtrl.viewProfile);
 

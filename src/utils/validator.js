@@ -179,7 +179,8 @@ function verifyUserWorkerToUpdate(data) {
     edit_email,
     edit_phone,
     edit_area_code,
-    edit_address
+    edit_address,
+    edit_disponibily
   } = data;
 
   //1. Validate empty values
@@ -191,7 +192,8 @@ function verifyUserWorkerToUpdate(data) {
     edit_email !== '' ||
     edit_phone !== '' ||
     edit_area_code !== '' ||
-    edit_address !== ''
+    edit_address !== '' ||
+    edit_disponibily !== ''
   ) {
     //2. Correct Length
     if (edit_first_name && !correctLength(edit_first_name, 4)) {
@@ -239,6 +241,7 @@ function verifyUserWorkerToUpdate(data) {
     if (edit_phone) ret.toUpdate.push(CONSTANTS.props_to_update.phone);
     if (edit_area_code) ret.toUpdate.push(CONSTANTS.props_to_update.area_code);
     if (edit_address) ret.toUpdate.push(CONSTANTS.props_to_update.address);
+    if (edit_disponibily) ret.toUpdate.push(CONSTANTS.props_to_update.disponibility);
 
     //if(codeCategorieSelect)ret.toUpdate.push(CONSTANTS.props_to_update.categorie);
     if (codeCategorieSelect && codeProfessionSelect)

@@ -7,7 +7,8 @@ module.exports = {
     email: 'EMAIL',
     phone: 'PHONE',
     area_code: 'PHONE_AREA',
-    address: 'ADDRESS'
+    address: 'ADDRESS',
+    disponibility: 'DISPONIBILITY'
   },
   cities: {
     CARTAGENA: 1

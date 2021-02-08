@@ -30,6 +30,7 @@ const getWorkerData = async id => {
   data.address = user.address || '';
   data.type = user.type;
   data.profileImage = user.profileImage || '';
+  data.disponibily = user.status || false;
 
   //worker data
   let works = await Workman.find({ id_user: id });
@@ -163,6 +164,7 @@ const changeInformation = async ({
   email,
   phone,
   address,
+  disponibility = 'disponible',
   areaCodePhone = '',
   id = false
 }) => {
@@ -185,6 +187,10 @@ const changeInformation = async ({
   user.email = em;
   user.phone = ph;
   user.address = ad;
+
+  //disponibility
+  let disp = disponibility === 'disponible' ? true : false;
+  user.status = disp; 
 
   //---------------
   await user.save();
