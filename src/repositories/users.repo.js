@@ -31,6 +31,7 @@ const getWorkerData = async id => {
   data.type = user.type;
   data.profileImage = user.profileImage || '';
   data.disponibily = user.status || false;
+  data.id = user._id;
 
   //worker data
   let works = await Workman.find({ id_user: id });
@@ -84,6 +85,7 @@ const getClientData = async id => {
   data.address = user.address || '';
   data.type = user.type;
   data.profileImage = user.profileImage || '';
+  data.id = user._id || '';
   return data;
 };
 

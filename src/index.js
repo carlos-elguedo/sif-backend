@@ -100,6 +100,9 @@ app.use('/api/rest/client', require('./routes/client'));
 //Route of the upload of files
 app.use('/api/rest/uploads', require('./routes/upload'));
 
+//Route of the mensages
+app.use('/api/rest/message', require('./routes/message'));
+
 //Route for facebook login
 app.get('/auth/error', (req, res) => res.send('Unknown Error'));
 app.get('/auth/facebook', passport.authenticate('facebook'));
