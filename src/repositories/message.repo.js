@@ -3,13 +3,14 @@
  * @version 0.0.1
  * File in charge ofacced and modify the data in the database
  */
-
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const Inbox = require('../models/Inbox');
 const Message = require('../models/Message');
 
-const sendMessage = async (idUser, idReceptor, message) => {
+const sendMessage = async (idUser, idReceptorString, message) => {
   try {
+    const idReceptor = mongoose.Types.ObjectId(idReceptorString);
     let sendBy = await User.findOne({ _id: idUser });
     if (!sendBy) return { status: 'error', message: 'El usuario no existe' };
     let receptor = await User.findOne({ _id: idReceptor });
@@ -70,6 +71,59 @@ const sendMessage = async (idUser, idReceptor, message) => {
   }
 };
 
+const getInbox = async idUser => {
+  try {
+    let user = await User.findOne({ _id: idUser });
+    if (!user) return { status: 'error', message: 'El usuario no existe' };
+
+    //Check if the ibox exist
+    const Inboxes = await Inbox.find({
+      $or: [{ id_user: idUser }, { id_worker: idUser }],
+      $and: [{ status: true }]
+    });
+
+    if (Inboxes) {
+      //El usuario tiene inbox formatearlos para retornarlos
+      const inboxesIds = Inboxes.map(item => {
+        return item._id;
+      });
+
+      const InBoxesData = await Inbox.aggregate([
+        {
+          $match: {
+            _id: { $in: inboxesIds }
+          }
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'id_user',
+            foreignField: '_id',
+            as: 'user_data'
+          }
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'id_worker',
+            foreignField: '_id',
+            as: 'receptor_data'
+          }
+        }
+      ]);
+
+      return InBoxesData;
+    } else {
+      //No tiene inbox
+      return [];
+    }
+  } catch (e) {
+    console.log('error message repo', e.message);
+    return { status: 'error', message: 'error catch' };
+  }
+};
+
 module.exports = {
-  sendMessage
+  sendMessage,
+  getInbox
 };
