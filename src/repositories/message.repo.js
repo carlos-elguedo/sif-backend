@@ -119,11 +119,63 @@ const getInbox = async idUser => {
     }
   } catch (e) {
     console.log('error message repo', e.message);
-    return { status: 'error', message: 'error catch' };
+    return {
+      status: 'error',
+      message: 'Error while get inboxes: ' + e.message
+    };
+  }
+};
+
+const getMessages = async (idInboxString, idUser) => {
+  try {
+    const idInbox = mongoose.Types.ObjectId(idInboxString);
+    let user = await User.findOne({ _id: idUser });
+    if (!user) return { status: 'error', message: 'El usuario no existe' };
+
+    //Check if the ibox exist
+    const messages = await Message.find({
+      id_inbox: idInbox
+    }).sort({ messageAt: -1 });
+
+    if (!messages.length)
+      return { status: 'error', message: 'No hay mensajes' };
+
+    const [InBoxesData] = await Inbox.aggregate([
+      {
+        $match: {
+          _id: idInbox
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'id_user',
+          foreignField: '_id',
+          as: 'user_data'
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'id_worker',
+          foreignField: '_id',
+          as: 'receptor_data'
+        }
+      }
+    ]);
+
+    return [messages, InBoxesData];
+  } catch (e) {
+    console.log('error message repo getMessages', e.message);
+    return {
+      status: 'error',
+      message: 'Error while get messages: ' + e.message
+    };
   }
 };
 
 module.exports = {
   sendMessage,
-  getInbox
+  getInbox,
+  getMessages
 };

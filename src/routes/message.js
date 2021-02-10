@@ -6,7 +6,14 @@ const MessageCtrl = require('../controllers/messageCtrl');
 //Get all the data
 router.get('/', passportConfig.userIsAuthenticated, MessageCtrl.getMessages);
 
-// List of all professions
+// Save a message
 router.post('/', passportConfig.userIsAuthenticated, MessageCtrl.sendMessage);
+
+// List of all messages
+router.get(
+  '/all',
+  passportConfig.userIsAuthenticated,
+  MessageCtrl.getChatMessage
+);
 
 module.exports = router;
