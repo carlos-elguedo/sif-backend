@@ -135,7 +135,7 @@ const getMessages = async (idInboxString, idUser) => {
     //Check if the ibox exist
     const messages = await Message.find({
       id_inbox: idInbox
-    }).sort({ messageAt: -1 });
+    }).sort({ messageAt: 1 });
 
     if (!messages.length)
       return { status: 'error', message: 'No hay mensajes' };
