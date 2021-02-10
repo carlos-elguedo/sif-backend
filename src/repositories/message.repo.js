@@ -20,9 +20,11 @@ const sendMessage = async (idUser, idReceptorString, message) => {
 
     //Check if the ibox exist
     const previousInbox = await Inbox.findOne({
-      id_user: idUser,
-      id_worker: idReceptor,
-      status: true
+      $or: [
+        { id_user: idUser, id_worker: idReceptor },
+        { id_user: idReceptor, id_worker: idUser }
+      ],
+      $and: [{ status: true }]
     });
 
     if (previousInbox) {

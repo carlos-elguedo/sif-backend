@@ -21,6 +21,8 @@ MessageCtrl.getMessages = async (req, res) => {
 
   const inboxes = await messageRepository.getInbox(id_user);
 
+  let userType = '';
+
   if (!inboxes.length) {
     res.json({
       status: 'empty',
@@ -46,6 +48,11 @@ MessageCtrl.getMessages = async (req, res) => {
           ? inbox.receptor_data[0].name || inbox.receptor_data[0].firstName
           : inbox.user_data[0].name || inbox.user_data[0].firstName;
 
+      userType =
+        GLOBAL_ID_USER === ID_SENTBY
+          ? inbox.user_data[0].type
+          : inbox.receptor_data[0].type;
+
       return {
         id: inbox._id,
         with: nameChat,
@@ -57,7 +64,8 @@ MessageCtrl.getMessages = async (req, res) => {
 
     res.json({
       status: 'ok',
-      inboxes: formatedInboxes
+      inboxes: formatedInboxes,
+      userType
     });
   }
 };
