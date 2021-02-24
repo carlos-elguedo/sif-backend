@@ -3,7 +3,7 @@ const { makeExecutableSchema } = require('graphql-tools');
 const errorHandler = require('./errors');
 const config = require('../../config/config');
 
-const { SIFApiRestCore } = require('../dataSources');
+const { SIFApiRestCore } = require('../datasources');
 
 const typeDefs = require('../schemas');
 const resolvers = require('../resolvers');
